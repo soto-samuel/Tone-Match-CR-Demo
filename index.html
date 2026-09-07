@@ -15,7 +15,7 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--dark); color: var(--text); line-height: 1.6; }
+        body { background-color: var(--dark); color: var(--text); line-height: 1.6; overflow-x: hidden; }
 
         header {
             display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
@@ -25,51 +25,71 @@
         .logo { font-size: 1.4rem; font-weight: bold; color: var(--primary); }
         .logo span { color: #fff; }
 
-        nav { display: flex; align-items: center; gap: 1.5rem; }
+        nav { display: flex; align-items: center; gap: 1rem; }
         nav a { color: var(--text); text-decoration: none; font-size: 0.9rem; }
         nav a:hover { color: var(--primary); }
 
-        .lang-select {
+        .select-control {
             background: #2a2a2a; color: #fff; border: 1px solid #444;
-            padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.85rem; cursor: pointer;
+            padding: 0.35rem 0.6rem; border-radius: 4px; font-size: 0.85rem; cursor: pointer;
         }
 
-        /* HERO LANDING SLOGAN */
-        .hero {
-            position: relative; min-height: 80vh; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; padding: 3rem 1.5rem; text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.92)), 
-                        url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+        /* HERO CLEAN WITH BACKGROUND CAROUSEL */
+        .hero-container {
+            position: relative; height: 85vh; width: 100%; display: flex;
+            align-items: center; justify-content: center; overflow: hidden; text-align: center;
         }
 
-        .hero-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.8rem; color: #fff; max-width: 800px; }
+        .hero-carousel {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;
+        }
+
+        .carousel-slide {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0;
+            transition: opacity 1.2s ease-in-out, transform 6s ease-in-out;
+            background-size: contain; background-position: center; background-repeat: no-repeat;
+            transform: scale(1.05);
+        }
+
+        .carousel-slide.active { opacity: 0.25; transform: scale(1); }
+
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2;
+            background: radial-gradient(circle, rgba(18,18,18,0.7) 0%, rgba(18,18,18,0.98) 90%);
+        }
+
+        .hero-content { position: relative; z-index: 3; max-width: 850px; padding: 0 1.5rem; }
+        .hero-title { font-size: 2.8rem; font-weight: 800; margin-bottom: 1rem; color: #fff; line-height: 1.2; }
         .hero-title span { color: var(--primary); }
-        .hero-subtitle { font-size: 1.1rem; color: var(--text-muted); max-width: 650px; margin-bottom: 2rem; }
+        .hero-subtitle { font-size: 1.15rem; color: var(--text-muted); max-width: 700px; margin: 0 auto 2.5rem auto; }
 
-        .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; }
+        .hero-actions { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; }
         .btn-hero-primary {
-            background: var(--primary); color: #fff; border: none; padding: 0.9rem 1.8rem;
-            border-radius: 30px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.2s;
+            background: var(--primary); color: #fff; border: none; padding: 1rem 2rem;
+            border-radius: 30px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.25s;
+            box-shadow: 0 4px 15px rgba(255, 87, 34, 0.4);
         }
-        .btn-hero-primary:hover { background: #e64a19; transform: translateY(-2px); }
+        .btn-hero-primary:hover { background: #e64a19; transform: translateY(-3px); }
 
         .btn-hero-sec {
-            background: transparent; color: #fff; border: 2px solid #555; padding: 0.9rem 1.8rem;
-            border-radius: 30px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.2s;
+            background: rgba(255, 255, 255, 0.05); color: #fff; border: 2px solid #555; padding: 1rem 2rem;
+            border-radius: 30px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.25s;
+            backdrop-filter: blur(5px);
         }
-        .btn-hero-sec:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+        .btn-hero-sec:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-3px); }
 
+        /* SECCIÓN DEL BOT INDEPENDIENTE */
+        .bot-section { padding: 4rem 2rem; background: #161616; display: flex; justify-content: center; border-bottom: 1px solid #282828; }
         .bot-card {
             background: rgba(30, 30, 30, 0.95); border: 1px solid #333; border-radius: 12px;
-            width: 100%; max-width: 680px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.6); text-align: left;
+            width: 100%; max-width: 700px; padding: 2.2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
         }
 
         .bot-header { text-align: center; margin-bottom: 1.5rem; }
-        .bot-header h2 { font-size: 1.5rem; margin-bottom: 0.4rem; }
-        .bot-header p { color: var(--text-muted); font-size: 0.85rem; }
+        .bot-header h2 { font-size: 1.6rem; margin-bottom: 0.4rem; color: #fff; }
+        .bot-header p { color: var(--text-muted); font-size: 0.88rem; }
 
         .chat-bubble { background: #2a2a2a; padding: 1rem; border-radius: 8px; margin-bottom: 1.2rem; border-left: 4px solid var(--primary); font-size: 0.95rem; }
-
         .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.8rem; }
 
         .btn-opt {
@@ -83,7 +103,7 @@
             font-size: 0.8rem; text-decoration: underline; margin-top: 1rem; display: block; width: 100%; text-align: center;
         }
 
-        section { padding: 3rem 2rem; max-width: 1250px; margin: 0 auto; }
+        section.catalog { padding: 4rem 2rem; max-width: 1250px; margin: 0 auto; }
         .sec-title { font-size: 1.6rem; margin-bottom: 0.5rem; border-left: 4px solid var(--primary); padding-left: 1rem; }
 
         .cat-filter-tabs { display: flex; gap: 0.5rem; margin-top: 1.5rem; flex-wrap: wrap; }
@@ -98,8 +118,8 @@
         }
         .prod-card:hover { transform: translateY(-4px); border-color: var(--primary); }
 
-        .prod-img-container { height: 200px; width: 100%; background: #0a0a0a; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-        .prod-img { width: 100%; height: 100%; object-fit: contain; padding: 0.5rem; }
+        .prod-img-container { height: 210px; width: 100%; background: #0a0a0a; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .prod-img { width: 100%; height: 100%; object-fit: contain; padding: 0.6rem; }
         
         .badge-import {
             position: absolute; top: 10px; right: 10px; background: rgba(0, 0, 0, 0.85);
@@ -117,7 +137,6 @@
         }
         .btn-view-detail:hover { background: var(--primary); }
 
-        /* MODAL DE DETALLE Y CHECKOUT */
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.88); z-index: 2000; align-items: center; justify-content: center; padding: 1rem;
@@ -165,24 +184,38 @@
         <nav>
             <a href="#bot-section" id="nav-finder">Tone Finder IA</a>
             <a href="#cat-section" id="nav-catalog">Catálogo Completo</a>
-            <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
+            
+            <select class="select-control" id="currSelect" onchange="changeCurrency(this.value)">
+                <option value="CRC">₡ CRC</option>
+                <option value="USD">$ USD</option>
+            </select>
+
+            <select class="select-control" id="langSelect" onchange="changeLanguage(this.value)">
                 <option value="es">🇪🇸 Español</option>
                 <option value="en">🇺🇸 English</option>
             </select>
         </nav>
     </header>
 
-    <!-- HERO DE BIENVENIDA Y SLOGAN -->
-    <section class="hero">
-        <h1 class="hero-title" id="txt-hero-title">ToneMatch CR: <span>El tono que buscas, traído a tus manos.</span></h1>
-        <p class="hero-subtitle" id="txt-hero-sub">Importación directa de gear especializado con asesoría por IA e inspección técnica por luthiers locales en Costa Rica.</p>
+    <!-- HERO LIMPIO CON CARROUSEL DE FONDO -->
+    <div class="hero-container">
+        <div class="hero-carousel" id="heroCarousel"></div>
+        <div class="hero-overlay"></div>
         
-        <div class="hero-actions">
-            <button class="btn-hero-primary" onclick="scrollToBot()" id="btn-hero-ai">🤖 Investigar con IA</button>
-            <button class="btn-hero-sec" onclick="scrollToCat()" id="btn-hero-cat">🎸 Ver Catálogo Directo</button>
+        <div class="hero-content">
+            <h1 class="hero-title" id="txt-hero-title">ToneMatch CR: <span>El tono que buscas, traído a tus manos.</span></h1>
+            <p class="hero-subtitle" id="txt-hero-sub">Importación directa de gear especializado con asesoría por IA e inspección técnica por luthiers locales en Costa Rica.</p>
+            
+            <div class="hero-actions">
+                <button class="btn-hero-primary" onclick="scrollToBot()" id="btn-hero-ai">🤖 Investigar con IA</button>
+                <button class="btn-hero-sec" onclick="scrollToCat()" id="btn-hero-cat">🎸 Ver Catálogo Directo</button>
+            </div>
         </div>
+    </div>
 
-        <div class="bot-card" id="bot-section">
+    <!-- SECCIÓN INDEPENDIENTE PARA EL BOT -->
+    <section class="bot-section" id="bot-section">
+        <div class="bot-card">
             <div class="bot-header">
                 <h2 id="txt-bot-title">Asistente de Tono e Importación</h2>
                 <p id="txt-bot-sub">Encontraremos el equipo ideal analizando versatilidad, maderas, pastillas y presupuesto.</p>
@@ -197,7 +230,7 @@
     </section>
 
     <!-- CATÁLOGO GENERAL -->
-    <section id="cat-section">
+    <section class="catalog" id="cat-section">
         <h2 class="sec-title" id="txt-cat-title">Catálogo Completo de Importación Directa</h2>
         <p style="color: var(--text-muted);" id="txt-cat-sub">Precios reales puestos en Costa Rica. Incluye flete, impuestos de aduana y garantía de importación.</p>
         
@@ -278,7 +311,7 @@
                 <label style="display: flex; gap: 0.8rem; align-items: flex-start; cursor: pointer;">
                     <input type="checkbox" id="chkLuthier" checked style="margin-top: 0.2rem; width: 18px; height: 18px;">
                     <div>
-                        <strong style="color: #fff;" id="lbl-luthier-title">🛠️ Incluir Servicio VIP de Luthier Afiliado (+₡15,000)</strong>
+                        <strong style="color: #fff;" id="lbl-luthier-title">🛠️ Incluir Servicio VIP de Luthier Afiliado (+₡15,000 / $30)</strong>
                         <p style="color: #ccc; font-size: 0.8rem; margin-top: 0.2rem;" id="lbl-luthier-desc">
                             Al llegar a Costa Rica, tu guitarra pasa directamente al taller del Luthier. Incluye **desempaque, inspección electrónica, limpieza, calibración personalizada y cambio de cuerdas gratis**.
                         </p>
@@ -295,15 +328,16 @@
 
     <script>
         let currentLang = 'es';
+        let currentCurrency = 'CRC';
+        const USD_RATE = 500;
+
         let currentStep = 'start';
         let userAnswers = {};
         let activeProduct = null;
 
-        // BASE DE DATOS MULTILENGUAJE COMPLETA
         const productsDB = [
-            // GUITARRAS
             {
-                id: 'lp_gibson', cat: 'guitar', title: "Gibson Les Paul Studio '70s Tribute", price: "₡580,000", rawPrice: 580000,
+                id: 'lp_gibson', cat: 'guitar', title: "Gibson Les Paul Studio '70s Tribute", rawPriceCRC: 580000,
                 desc: {
                     es: "Cuerpo de caoba con tapa de arce, mástil de caoba perfil slim '70s y pastillas Mini-Humbuckers. Salida definida y tono de rock potente.",
                     en: "Mahogany body with maple top, slim '70s neck profile, and Mini-Humbucker pickups. Defined output and punchy rock tone."
@@ -316,7 +350,7 @@
                 genres: { es: "Hard Rock, Blues, Classic Rock", en: "Hard Rock, Blues, Classic Rock" }
             },
             {
-                id: 'sg_gibson', cat: 'guitar', title: "Gibson SG Standard Heritage Cherry", price: "₡620,000", rawPrice: 620000,
+                id: 'sg_gibson', cat: 'guitar', title: "Gibson SG Standard Heritage Cherry", rawPriceCRC: 620000,
                 desc: {
                     es: "Cuerpo ultra liviano de caoba, diapasón de palo de rosa y pastillas 490R/490T Humbuckers. Ataque mordaz y peso cómodo.",
                     en: "Ultra lightweight mahogany body, rosewood fretboard, and 490R/490T Humbucker pickups. Biting attack and comfortable weight."
@@ -329,7 +363,7 @@
                 genres: { es: "Hard Rock, Heavy Metal, Blues", en: "Hard Rock, Heavy Metal, Blues" }
             },
             {
-                id: 'es345_gibson', cat: 'guitar', title: "Gibson ES-345 Semi-Hollowbody", price: "₡1,250,000", rawPrice: 1250000,
+                id: 'es345_gibson', cat: 'guitar', title: "Gibson ES-345 Semi-Hollowbody", rawPriceCRC: 1250000,
                 desc: {
                     es: "Cuerpo semi-hueco de arce laminado con bloque central, pastillas Calibrated T-Type Humbuckers y selector Varitone. Resonancia límpida y cálida.",
                     en: "Laminated maple semi-hollow body with center block, Calibrated T-Type Humbuckers, and Varitone switch. Clear, warm resonance."
@@ -342,10 +376,10 @@
                 genres: { es: "Blues, Jazz, Rock Clásico", en: "Blues, Jazz, Classic Rock" }
             },
             {
-                id: 'strat_squier', cat: 'guitar', title: "Squier Classic Vibe '60s Stratocaster", price: "₡245,000", rawPrice: 245000,
+                id: 'strat_squier', cat: 'guitar', title: "Squier Classic Vibe '60s Stratocaster", rawPriceCRC: 245000,
                 desc: {
-                    es: "Cuerpo de nato, tres pastillas de alnico diseñadas por Fender, mástil en 'C' suave. El clásico tono brillante y cristalino de Fender a precio accesible.",
-                    en: "Nato body, three Fender-designed alnico pickups, smooth 'C' neck. Classic bright Fender tone at an accessible price."
+                    es: "Cuerpo de nato, tres pastillas de alnico diseñadas por Fender, mástil en 'C' suave. El clásico tono brillante y cristalino de Fender.",
+                    en: "Nato body, three Fender-designed alnico pickups, smooth 'C' neck. Classic bright Fender tone."
                 },
                 tag: { es: "Guitarra Eléctrica", en: "Electric Guitar" },
                 img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPMqlo6uBVgFC1-hjILIgoAF9U62yIqvtvXq5Utcp16w&s=10",
@@ -355,10 +389,10 @@
                 genres: { es: "Pop, Indie, Blues, Funk", en: "Pop, Indie, Blues, Funk" }
             },
             {
-                id: 'lp_epi', cat: 'guitar', title: "Epiphone Les Paul Custom Black Beauty", price: "₡395,000", rawPrice: 395000,
+                id: 'lp_epi', cat: 'guitar', title: "Epiphone Les Paul Custom Black Beauty", rawPriceCRC: 395000,
                 desc: {
-                    es: "Tres pastillas Humbucker ProBucker, herrajes dorados y cuerpo de caoba. Tono denso de alta salida y acabado de gala.",
-                    en: "Three ProBucker Humbucker pickups, gold hardware, and mahogany body. Thick high-output tone with tuxedo aesthetics."
+                    es: "Tres pastillas Humbucker ProBucker, herrajes dorados y cuerpo de caoba. Tono denso de alta salida.",
+                    en: "Three ProBucker Humbucker pickups, gold hardware, and mahogany body. Thick high-output tone."
                 },
                 tag: { es: "Guitarra Eléctrica", en: "Electric Guitar" },
                 img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCxGoaNgzo2CqMbyenJMxM-vDcyyP5u6ZWGSu8b2zlAA&s=10",
@@ -368,7 +402,7 @@
                 genres: { es: "Hard Rock, Heavy Metal, Blues", en: "Hard Rock, Heavy Metal, Blues" }
             },
             {
-                id: 'sg_epi', cat: 'guitar', title: "Epiphone SG Standard '61 Vintage", price: "₡285,000", rawPrice: 285000,
+                id: 'sg_epi', cat: 'guitar', title: "Epiphone SG Standard '61 Vintage", rawPriceCRC: 285000,
                 desc: {
                     es: "Cuerpo de caoba con potenciómetros CTS y pastillas ProBucker-2 y 3. Tono vintage crujiente y cuerpo liviano.",
                     en: "Mahogany body with CTS pots and ProBucker-2 & 3 pickups. Crunchy vintage tone and lightweight feel."
@@ -381,7 +415,7 @@
                 genres: { es: "Rock, Hard Rock, Blues", en: "Rock, Hard Rock, Blues" }
             },
             {
-                id: 'strat_fender', cat: 'guitar', title: "Fender Player II Stratocaster HSS", price: "₡435,000", rawPrice: 435000,
+                id: 'strat_fender', cat: 'guitar', title: "Fender Player II Stratocaster HSS", rawPriceCRC: 435000,
                 desc: {
                     es: "Pastilla Humbucker en el puente + 2 Single-Coils alnico 5. La máxima versatilidad entre distorsiones potentes y limpios cristalinos.",
                     en: "Bridge Humbucker + 2 Alnico 5 Single-Coils. Ultimate versatility combining punchy overdrive and sparkling cleans."
@@ -394,7 +428,7 @@
                 genres: { es: "Todos los géneros", en: "All genres" }
             },
             {
-                id: 'tele_fender', cat: 'guitar', title: "Fender Player II Telecaster", price: "₡415,000", rawPrice: 415000,
+                id: 'tele_fender', cat: 'guitar', title: "Fender Player II Telecaster", rawPriceCRC: 415000,
                 desc: {
                     es: "Cuerpo de aliso, pastillas Alnico V Single-Coil con el clásico ataque 'twang'. Sonido cortante directo que destaca en cualquier mezcla.",
                     en: "Alder body, Alnico V Single-Coils with classic Tele twang. Cutting bite that shines in any mix."
@@ -407,23 +441,23 @@
                 genres: { es: "Rock, Country, Indie, Pop", en: "Rock, Country, Indie, Pop" }
             },
             {
-                id: 'prs_custom', cat: 'guitar', title: "PRS SE Custom 24", price: "₡365,000", rawPrice: 365000,
+                id: 'prs_custom', cat: 'guitar', title: "PRS SE Custom 24", rawPriceCRC: 365000,
                 desc: {
-                    es: "Tapa de arce figurado, 24 trastes y pastillas 85/15 'S'. Mástil ultra suave con diseño ergónomico y sustain impecable.",
+                    es: "Tapa de arce figurado, 24 trastes y pastillas 85/15 'S'. Mástil ultra suave con diseño ergonómico y sustain impecable.",
                     en: "Figured maple veneer, 24 frets, and 85/15 'S' pickups. Ergonomic neck with smooth feel and pristine sustain."
                 },
                 tag: { es: "Guitarra Eléctrica", en: "Electric Guitar" },
-                img: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?auto=format&fit=crop&w=600&q=80",
+                img: "https://cdn.shoplightspeed.com/shops/610546/files/67322847/500x500x2/image.jpg",
                 wood: { es: "Caoba / Tapa Arce", en: "Mahogany / Maple Top" },
                 pickups: { es: "PRS 85/15 'S' Humbuckers", en: "PRS 85/15 'S' Humbuckers" },
                 versatility: { es: "Máxima", en: "Maximum" },
                 genres: { es: "Rock, Pop, Solos, Fusion", en: "Rock, Pop, Leads, Fusion" }
             },
             {
-                id: 'jackson_soloist', cat: 'guitar', title: "Jackson Pro Series Soloist SL2", price: "₡510,000", rawPrice: 510000,
+                id: 'jackson_soloist', cat: 'guitar', title: "Jackson Pro Series Soloist SL2", rawPriceCRC: 510000,
                 desc: {
-                    es: "Construcción Neck-Through, puente trémolo Floyd Rose 1000 y pastillas Seymour Duncan Distortion. Diseñada para shredding y alta ganancia.",
-                    en: "Neck-Through construction, Floyd Rose 1000 tremolo, Seymour Duncan Distortion pickups. Engineered for shredding and high gain."
+                    es: "Construcción Neck-Through, puente trémolo Floyd Rose 1000 y pastillas Seymour Duncan Distortion.",
+                    en: "Neck-Through construction, Floyd Rose 1000 tremolo, Seymour Duncan Distortion pickups."
                 },
                 tag: { es: "Guitarra Eléctrica", en: "Electric Guitar" },
                 img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDpOIibqGRwnDUvU0k_bVbt1FJB2BfW1PGm2sNV-1ee9k3ueSU6d3UW5o&s=10",
@@ -432,10 +466,8 @@
                 versatility: { es: "Dedicada (Metal)", en: "Dedicated (Metal)" },
                 genres: { es: "Metal, Shred, Hard Rock", en: "Metal, Shred, Hard Rock" }
             },
-
-            // AMPLIFICADORES
             {
-                id: 'amp_marshall', cat: 'amp', title: "Marshall DSL40CR Tube Combo", price: "₡380,000", rawPrice: 380000,
+                id: 'amp_marshall', cat: 'amp', title: "Marshall DSL40CR Tube Combo", rawPriceCRC: 380000,
                 desc: {
                     es: "Amplificador 100% valvular de 40W con válvulas EL34 y parlante Celestion V-Type de 12\". Crujido británico puro.",
                     en: "40W 100% tube amplifier driven by EL34 valves and 12\" Celestion V-Type speaker. Pure British crunch."
@@ -448,7 +480,7 @@
                 genres: { es: "Rock, Hard Rock, Blues", en: "Rock, Hard Rock, Blues" }
             },
             {
-                id: 'amp_mustang', cat: 'amp', title: "Fender Mustang III V2 (Combo 100W con Footswitch Incluido)", price: "₡210,000", rawPrice: 210000,
+                id: 'amp_mustang', cat: 'amp', title: "Fender Mustang III V2 (Combo 100W con Footswitch Incluido)", rawPriceCRC: 210000,
                 desc: {
                     es: "Combo de 100W con parlante Celestion de 12\", 17 modelos de amplificadores y 44 efectos integrados. Incluye pedalera/footswitch de control.",
                     en: "100W combo with 12\" Celestion speaker, 17 amp models, and 44 built-in FX. Includes footswitch pedal."
@@ -461,7 +493,7 @@
                 genres: { es: "Todos los estilos", en: "All styles" }
             },
             {
-                id: 'amp_orange', cat: 'amp', title: "Orange Crush 35RT Combo", price: "₡165,000", rawPrice: 165000,
+                id: 'amp_orange', cat: 'amp', title: "Orange Crush 35RT Combo", rawPriceCRC: 165000,
                 desc: {
                     es: "Combo analógico de 35W, 2 canales con alta ganancia, afinador integrado y Reverb digital de resorte.",
                     en: "35W analog combo, 2 high-gain channels, built-in tuner, and digital spring reverb."
@@ -473,10 +505,8 @@
                 versatility: { es: "Media-Alta", en: "Medium-High" },
                 genres: { es: "Rock, Indie, Metal", en: "Rock, Indie, Metal" }
             },
-
-            // PEDALES Y MULTIEFECTOS
             {
-                id: 'pedal_ts9', cat: 'pedal', title: "Ibanez TS9 Tube Screamer", price: "₡65,000", rawPrice: 65000,
+                id: 'pedal_ts9', cat: 'pedal', title: "Ibanez TS9 Tube Screamer", rawPriceCRC: 65000,
                 desc: {
                     es: "Overdrive analógico clásico. Empuja las frecuencias medias para solos de guitarra limpios y definidos.",
                     en: "Classic analog overdrive. Pushes mid frequencies for punchy, soaring guitar leads."
@@ -489,7 +519,7 @@
                 genres: { es: "Blues, Rock, Hard Rock", en: "Blues, Rock, Hard Rock" }
             },
             {
-                id: 'pedal_muff', cat: 'pedal', title: "Electro-Harmonix Big Muff Pi Fuzz", price: "₡52,000", rawPrice: 52000,
+                id: 'pedal_muff', cat: 'pedal', title: "Electro-Harmonix Big Muff Pi Fuzz", rawPriceCRC: 52000,
                 desc: {
                     es: "Fuzz analógico para tonos saturados masivos y sostenidos.",
                     en: "Analog fuzz for massive wall-of-sound distortion and sustain."
@@ -502,7 +532,7 @@
                 genres: { es: "Indie, Grunge, Hard Rock", en: "Indie, Grunge, Hard Rock" }
             },
             {
-                id: 'pedal_delay', cat: 'pedal', title: "MXR M169 Carbon Copy Analog Delay", price: "₡88,000", rawPrice: 88000,
+                id: 'pedal_delay', cat: 'pedal', title: "MXR M169 Carbon Copy Analog Delay", rawPriceCRC: 88000,
                 desc: {
                     es: "Delay 100% analógico con tecnología Bucket-Brigade y modulaciones cálidas.",
                     en: "100% analog delay featuring Bucket-Brigade technology with warm modulation."
@@ -515,7 +545,7 @@
                 genres: { es: "Ambient, Rock, Solos", en: "Ambient, Rock, Leads" }
             },
             {
-                id: 'pedal_ds1', cat: 'pedal', title: "Boss DS-1 Distortion", price: "₡42,000", rawPrice: 42000,
+                id: 'pedal_ds1', cat: 'pedal', title: "Boss DS-1 Distortion", rawPriceCRC: 42000,
                 desc: {
                     es: "El pedal de distorsión clásico naranja de respuesta dura y definida.",
                     en: "Classic orange distortion pedal delivering hard-edged, defined attack."
@@ -528,7 +558,7 @@
                 genres: { es: "Rock, Grunge, Punk", en: "Rock, Grunge, Punk" }
             },
             {
-                id: 'pedal_timeline', cat: 'pedal', title: "Strymon Timeline Multidelay", price: "₡260,000", rawPrice: 260000,
+                id: 'pedal_timeline', cat: 'pedal', title: "Strymon Timeline Multidelay", rawPriceCRC: 260000,
                 desc: {
                     es: "Procesador de delay de estudio con 12 máquinas de retardo y 200 presets.",
                     en: "Studio-grade delay processor with 12 delay machines and 200 presets."
@@ -541,7 +571,7 @@
                 genres: { es: "Pro, Ambient, Fusion", en: "Pro, Ambient, Fusion" }
             },
             {
-                id: 'multi_helix', cat: 'pedal', title: "Line 6 Helix LT Guitar Processor", price: "₡680,000", rawPrice: 680000,
+                id: 'multi_helix', cat: 'pedal', title: "Line 6 Helix LT Guitar Processor", rawPriceCRC: 680000,
                 desc: {
                     es: "Modelador de amplificadores y efectos con doble motor DSP HX y calidad de estudio.",
                     en: "Flagship guitar amp & FX modeler powered by dual HX DSP engine."
@@ -554,6 +584,14 @@
                 genres: { es: "Todos los géneros", en: "All genres" }
             }
         ];
+
+        function formatPrice(crcValue) {
+            if (currentCurrency === 'USD') {
+                const usd = Math.round(crcValue / USD_RATE);
+                return `$${usd.toLocaleString()} USD`;
+            }
+            return `₡${crcValue.toLocaleString()} CRC`;
+        }
 
         const translations = {
             es: {
@@ -579,7 +617,7 @@
                 timeMsg: "Tiempo estimado de llegada a Costa Rica: <strong>10 a 14 días hábiles</strong>.",
                 guarantee: "🛡️ <strong>Garantía Cero Riesgo:</strong> Ingresas los datos de tu tarjeta para autorizar el pedido, pero <strong>el cobro NO se realiza hoy</strong>. El dinero se liquida únicamente cuando el producto llega al país y lo recibes verificado.",
                 cardName: "Nombre Completo (Tarjetahabiente):", cardNum: "Número de Tarjeta (Reserva sin cobro inmediato):", cardExp: "Vencimiento:",
-                luthierTitle: "🛠️ Incluir Servicio VIP de Luthier Afiliado (+₡15,000)",
+                luthierTitle: "🛠️ Incluir Servicio VIP de Luthier Afiliado (+₡15,000 / $30)",
                 luthierDesc: "Al llegar a Costa Rica, tu guitarra pasa directamente al taller del Luthier. Incluye **desempaque, inspección electrónica, limpieza, calibración personalizada y cambio de cuerdas gratis**.",
                 btnCancel: "Cerrar", btnConfirm: "CONFIRMAR PEDIDO E IMPORTAR",
                 alertOk: "¡Pedido de importación pre-autorizado con éxito!\n\nTu tarjeta NO ha sido cobrada aún. Tiempo estimado de entrega: 10 a 14 días.",
@@ -608,13 +646,20 @@
                 timeMsg: "Estimated arrival time to Costa Rica: <strong>10 to 14 business days</strong>.",
                 guarantee: "🛡️ <strong>Zero-Risk Guarantee:</strong> Enter your card details to authorize the order, but <strong>NO charge is made today</strong>. Funds are settled only when the product arrives in Costa Rica and is verified.",
                 cardName: "Full Name (Cardholder):", cardNum: "Card Number (Hold without immediate charge):", cardExp: "Expiration:",
-                luthierTitle: "🛠️ Include VIP Luthier Service (+₡15,000)",
+                luthierTitle: "🛠️ Include VIP Luthier Service (+₡15,000 / $30)",
                 luthierDesc: "Upon arrival in Costa Rica, your guitar goes straight to our affiliated Luthier shop. Includes **unboxing, electronic check, cleaning, custom setup, and free re-stringing**.",
                 btnCancel: "Close", btnConfirm: "CONFIRM ORDER & IMPORT",
                 alertOk: "Import order pre-authorized successfully!\n\nYour card has NOT been charged today. Estimated arrival: 10 to 14 business days.",
                 alertLuthier: "\n\n🛠️ Includes professional luthier inspection, custom setup, and cleaning before final delivery."
             }
         };
+
+        function changeCurrency(curr) {
+            currentCurrency = curr;
+            renderProducts('all');
+            renderBotState();
+            if (activeProduct) updateModalTexts();
+        }
 
         function changeLanguage(lang) {
             currentLang = lang;
@@ -659,7 +704,26 @@
         function scrollToBot() { document.getElementById('bot-section').scrollIntoView({ behavior: 'smooth' }); }
         function scrollToCat() { document.getElementById('cat-section').scrollIntoView({ behavior: 'smooth' }); }
 
-        // RENDERIZADO DE PRODUCTOS
+        function initHeroCarousel() {
+            const container = document.getElementById('heroCarousel');
+            const bgGuitars = productsDB.filter(p => p.cat === 'guitar').slice(0, 5);
+
+            bgGuitars.forEach((g, idx) => {
+                const slide = document.createElement('div');
+                slide.className = `carousel-slide ${idx === 0 ? 'active' : ''}`;
+                slide.style.backgroundImage = `url('${g.img}')`;
+                container.appendChild(slide);
+            });
+
+            let currentSlide = 0;
+            const slides = container.querySelectorAll('.carousel-slide');
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 4000);
+        }
+
         function renderProducts(filterCategory) {
             const container = document.getElementById('products-container');
             container.innerHTML = '';
@@ -681,7 +745,7 @@
                         <div>
                             <span class="prod-tag">${p.tag[currentLang]}</span>
                             <h3 class="prod-title">${p.title}</h3>
-                            <div class="prod-price">${p.price}</div>
+                            <div class="prod-price">${formatPrice(p.rawPriceCRC)}</div>
                         </div>
                         <button class="btn-view-detail">${t.btnDetail}</button>
                     </div>
@@ -696,7 +760,7 @@
             renderProducts(cat);
         }
 
-        // CHATBOT INTERACTIVO
+        /* CHATBOT CON OPCIONES LIMPIAS SIN MARCAS NI PARENTESIS */
         function renderBotState() {
             const msg = document.getElementById('bot-msg');
             const opts = document.getElementById('bot-opts');
@@ -712,36 +776,38 @@
             } else if (currentStep === 'philosophy') {
                 msg.innerText = t.q2;
                 opts.innerHTML = `
-                    <button class="btn-opt" onclick="answerBot('philosophy', 'versatile')">🔄 ${currentLang === 'es' ? 'Híbrido / Versátil (Adaptable a varios géneros)' : 'Hybrid / Versatile (Adaptable to many genres)'}</button>
-                    <button class="btn-opt" onclick="answerBot('philosophy', 'dedicated')">🎯 ${currentLang === 'es' ? 'Dedicado Puro (100% especialista en un género)' : 'Pure Dedicated (100% genre specialist)'}</button>
+                    <button class="btn-opt" onclick="answerBot('philosophy', 'versatile')">🔄 ${currentLang === 'es' ? 'Híbrido / Versátil' : 'Hybrid / Versatile'}</button>
+                    <button class="btn-opt" onclick="answerBot('philosophy', 'dedicated')">🎯 ${currentLang === 'es' ? 'Dedicado Puro' : 'Pure Dedicated'}</button>
                 `;
             } else if (currentStep === 'style') {
                 msg.innerText = t.q3;
                 opts.innerHTML = `
-                    <button class="btn-opt" onclick="answerBot('style', 'hardrock')">⚡ Hard Rock / Heavy Metal (Slash, AC/DC)</button>
-                    <button class="btn-opt" onclick="answerBot('style', 'latino')">🎸 Rock en Español / Indie (Soda Stereo, Cerati)</button>
-                    <button class="btn-opt" onclick="answerBot('style', 'blues')">🎷 Blues / Classic Rock (SRV, Santana)</button>
+                    <button class="btn-opt" onclick="answerBot('style', 'hardrock')">⚡ Hard Rock / Heavy Metal</button>
+                    <button class="btn-opt" onclick="answerBot('style', 'latino')">🎸 Rock Latino / Indie</button>
+                    <button class="btn-opt" onclick="answerBot('style', 'blues')">🎷 Blues / Classic Rock</button>
                 `;
             } else if (currentStep === 'specs') {
                 msg.innerText = t.q4;
                 if (userAnswers.type === 'guitar') {
                     opts.innerHTML = `
-                        <button class="btn-opt" onclick="answerBot('specs', 'heavy')">⚖️ ${currentLang === 'es' ? 'Caoba Pesada / Sustain Mágnum (Les Paul)' : 'Thick Mahogany / Heavy Sustain (Les Paul)'}</button>
-                        <button class="btn-opt" onclick="answerBot('specs', 'light')">🪶 ${currentLang === 'es' ? 'Cuerpo Liviano / Doble Cuerno (SG / Jackson)' : 'Lightweight Body / Double Cut (SG / Jackson)'}</button>
-                        <button class="btn-opt" onclick="answerBot('specs', 'hss')">🎛️ ${currentLang === 'es' ? 'Pastillas HSS / Mini-Humbuckers (Versatilidad)' : 'HSS Pickups / Mini-Humbuckers (Versatility)'}</button>
+                        <button class="btn-opt" onclick="answerBot('specs', 'heavy')">⚖️ ${currentLang === 'es' ? 'Cuerpo Denso & Mágnum Sustain' : 'Dense Body & Massive Sustain'}</button>
+                        <button class="btn-opt" onclick="answerBot('specs', 'light')">🪶 ${currentLang === 'es' ? 'Cuerpo Liviano & Mástil Rápido' : 'Lightweight Body & Fast Neck'}</button>
+                        <button class="btn-opt" onclick="answerBot('specs', 'hss')">🎛️ ${currentLang === 'es' ? 'Configuración de Pastillas Mixta' : 'Mixed Pickup Configuration'}</button>
                     `;
                 } else {
                     opts.innerHTML = `
-                        <button class="btn-opt" onclick="answerBot('specs', 'analog')">📻 ${currentLang === 'es' ? 'Válvula / Analógico Puro' : 'Pure Tube / Analog'}</button>
-                        <button class="btn-opt" onclick="answerBot('specs', 'digital')">💻 ${currentLang === 'es' ? 'Digital All-in-One con Efectos' : 'Digital All-in-One with FX'}</button>
+                        <button class="btn-opt" onclick="answerBot('specs', 'analog')">📻 ${currentLang === 'es' ? 'Circuito Valvular Analógico' : 'Analog Tube Circuit'}</button>
+                        <button class="btn-opt" onclick="answerBot('specs', 'digital')">💻 ${currentLang === 'es' ? 'Procesamiento Digital de Modelado' : 'Digital Modeling DSP'}</button>
                     `;
                 }
             } else if (currentStep === 'budget') {
                 msg.innerText = t.q5;
+                const b2 = formatPrice(300000);
+                const b3 = formatPrice(600000);
                 opts.innerHTML = `
-                    <button class="btn-opt" onclick="answerBot('budget', 'low')">₡40,000 - ₡250,000</button>
-                    <button class="btn-opt" onclick="answerBot('budget', 'mid')">₡250,000 - ₡600,000</button>
-                    <button class="btn-opt" onclick="answerBot('budget', 'high')">₡600,000+</button>
+                    <button class="btn-opt" onclick="answerBot('budget', 'low')">< ${b2}</button>
+                    <button class="btn-opt" onclick="answerBot('budget', 'mid')">${b2} - ${b3}</button>
+                    <button class="btn-opt" onclick="answerBot('budget', 'high')">${b3}+</button>
                 `;
             }
         }
@@ -778,7 +844,6 @@
             renderBotState();
         }
 
-        // MODAL Y COMPARADOR MULTILENGUAJE
         function openImportModal(prodId) {
             activeProduct = productsDB.find(item => item.id === prodId);
             if (!activeProduct) return;
@@ -799,7 +864,7 @@
         function updateModalTexts() {
             if (!activeProduct) return;
             document.getElementById('modal-item-title').innerText = activeProduct.title;
-            document.getElementById('modal-item-price').innerText = activeProduct.price;
+            document.getElementById('modal-item-price').innerText = formatPrice(activeProduct.rawPriceCRC);
             document.getElementById('modal-item-tag').innerText = activeProduct.tag[currentLang];
             document.getElementById('modal-item-desc').innerText = activeProduct.desc[currentLang];
             document.getElementById('modal-item-img').src = activeProduct.img;
@@ -821,7 +886,7 @@
             
             const sameCat = productsDB.filter(p => p.cat === activeProduct.cat && p.id !== activeProduct.id);
             sameCat.forEach(p => {
-                select.innerHTML += `<option value="${p.id}">${p.title} (${p.price})</option>`;
+                select.innerHTML += `<option value="${p.id}">${p.title} (${formatPrice(p.rawPriceCRC)})</option>`;
             });
 
             updateCompareTable();
@@ -838,7 +903,7 @@
 
             const tbody = document.getElementById('compare-tbody');
             tbody.innerHTML = `
-                <tr><td><strong>${t.thPrice}</strong></td><td>${activeProduct.price}</td><td>${compareProd.price}</td></tr>
+                <tr><td><strong>${t.thPrice}</strong></td><td>${formatPrice(activeProduct.rawPriceCRC)}</td><td>${formatPrice(compareProd.rawPriceCRC)}</td></tr>
                 <tr><td><strong>${t.thWood}</strong></td><td>${activeProduct.wood[currentLang]}</td><td>${compareProd.wood[currentLang]}</td></tr>
                 <tr><td><strong>${t.thPickups}</strong></td><td>${activeProduct.pickups[currentLang]}</td><td>${compareProd.pickups[currentLang]}</td></tr>
                 <tr><td><strong>${t.thVers}</strong></td><td>${activeProduct.versatility[currentLang]}</td><td>${compareProd.versatility[currentLang]}</td></tr>
@@ -858,6 +923,7 @@
         }
 
         // Inicializar
+        initHeroCarousel();
         renderProducts('all');
         renderBotState();
     </script>
