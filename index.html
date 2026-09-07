@@ -14,133 +14,63 @@
             --accent: #00e676;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--dark);
-            color: var(--text);
-            line-height: 1.6;
-            padding-bottom: 80px; /* Espacio para el carrito flotante */
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--dark); color: var(--text); line-height: 1.6; padding-bottom: 80px; }
 
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.2rem 2rem;
-            background: rgba(18, 18, 18, 0.95);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid #333;
+            display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 2rem;
+            background: rgba(18, 18, 18, 0.95); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #333;
         }
 
         .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary); }
         .logo span { color: #fff; }
 
-        nav a {
-            color: var(--text);
-            text-decoration: none;
-            margin-left: 1.5rem;
-            font-size: 0.95rem;
-            transition: 0.3s;
-        }
-
+        nav a { color: var(--text); text-decoration: none; margin-left: 1.5rem; font-size: 0.95rem; transition: 0.3s; }
         nav a:hover { color: var(--primary); }
 
         .hero {
-            position: relative;
-            min-height: 75vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), 
+            position: relative; min-height: 75vh; display: flex; align-items: center; justify-content: center; padding: 2rem;
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.9)), 
                         url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
         }
 
         .bot-card {
-            background: rgba(30, 30, 30, 0.95);
-            border: 1px solid #333;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 580px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            backdrop-filter: blur(8px);
+            background: rgba(30, 30, 30, 0.95); border: 1px solid #333; border-radius: 12px;
+            width: 100%; max-width: 580px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5); backdrop-filter: blur(8px);
         }
 
         .bot-header { text-align: center; margin-bottom: 1.5rem; }
         .bot-header h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
 
-        .chat-bubble {
-            background: #2a2a2a;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.2rem;
-            border-left: 4px solid var(--primary);
-        }
+        .chat-bubble { background: #2a2a2a; padding: 1rem; border-radius: 8px; margin-bottom: 1.2rem; border-left: 4px solid var(--primary); }
 
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 0.8rem;
-        }
+        .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.8rem; }
 
         .btn-opt {
-            background: #2c2c2c;
-            color: #fff;
-            border: 1px solid #444;
-            padding: 0.8rem;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 0.9rem;
-            text-align: center;
+            background: #2c2c2c; color: #fff; border: 1px solid #444; padding: 0.8rem;
+            border-radius: 6px; cursor: pointer; transition: 0.2s; font-size: 0.9rem; text-align: center;
         }
 
         .btn-opt:hover { background: var(--primary); border-color: var(--primary); }
 
         .btn-reset {
-            background: transparent;
-            color: var(--text-muted);
-            border: none;
-            cursor: pointer;
-            font-size: 0.8rem;
-            text-decoration: underline;
-            margin-top: 1rem;
-            display: block;
-            width: 100%;
-            text-align: center;
+            background: transparent; color: var(--text-muted); border: none; cursor: pointer;
+            font-size: 0.8rem; text-decoration: underline; margin-top: 1rem; display: block; width: 100%; text-align: center;
         }
 
         section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
         .sec-title { font-size: 1.8rem; margin-bottom: 2rem; border-left: 4px solid var(--primary); padding-left: 1rem; }
 
-        .grid-products {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
+        .grid-products { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
 
         .prod-card {
-            background: var(--card-bg);
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid #333;
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
+            background: var(--card-bg); border-radius: 8px; overflow: hidden; border: 1px solid #333;
+            transition: 0.3s; display: flex; flex-direction: column;
         }
 
         .prod-card:hover { transform: translateY(-5px); border-color: var(--primary); }
 
-        .prod-img-container { height: 200px; width: 100%; overflow: hidden; }
+        .prod-img-container { height: 200px; width: 100%; overflow: hidden; background: #000; }
         .prod-img { width: 100%; height: 100%; object-fit: cover; }
 
         .prod-body { padding: 1.2rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
@@ -149,49 +79,26 @@
         .prod-price { font-size: 1.25rem; font-weight: bold; color: var(--primary); margin-bottom: 0.5rem; }
 
         .btn-add-cart {
-            background: #2a2a2a;
-            color: #fff;
-            border: 1px solid var(--primary);
-            padding: 0.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            transition: 0.2s;
-            font-weight: bold;
+            background: #2a2a2a; color: #fff; border: 1px solid var(--primary); padding: 0.5rem;
+            border-radius: 4px; cursor: pointer; width: 100%; transition: 0.2s; font-weight: bold;
         }
         .btn-add-cart:hover { background: var(--primary); }
 
         .detail-view {
-            display: none;
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 2rem;
-            border: 1px solid #333;
-            margin-top: 2rem;
+            display: none; background: var(--card-bg); border-radius: 12px; padding: 2rem;
+            border: 1px solid #333; margin-top: 2rem;
         }
 
         .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
         @media (max-width: 768px) { .detail-grid { grid-template-columns: 1fr; } }
 
-        .price-compare {
-            background: #181818;
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-            border: 1px solid #333;
-        }
-
+        .price-compare { background: #181818; padding: 1rem; border-radius: 8px; margin: 1rem 0; border: 1px solid #333; }
         .price-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem; }
         .badge-good { color: var(--accent); font-weight: bold; }
 
         .seller-chat-box {
-            background: #181818;
-            border-radius: 8px;
-            padding: 1rem;
-            height: 160px;
-            overflow-y: auto;
-            margin-bottom: 1rem;
-            border: 1px solid #333;
+            background: #181818; border-radius: 8px; padding: 1rem; height: 160px;
+            overflow-y: auto; margin-bottom: 1rem; border: 1px solid #333;
         }
 
         .msg { margin-bottom: 0.8rem; font-size: 0.85rem; }
@@ -199,87 +106,45 @@
         .msg-user { color: #fff; text-align: right; }
 
         .btn-action {
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
+            background: var(--primary); color: #fff; border: none; padding: 0.8rem 1.5rem;
+            border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%;
         }
 
         .luthier-card {
-            background: var(--card-bg);
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1rem;
+            background: var(--card-bg); border: 1px solid #333; border-radius: 8px;
+            padding: 1.5rem; display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1rem;
         }
 
         .luthier-avatar { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; }
 
         .btn-sec {
-            background: transparent;
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
+            background: transparent; border: 1px solid var(--primary); color: var(--primary);
+            padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;
         }
         .btn-sec:hover { background: var(--primary); color: #fff; }
 
-        /* BARRA DE CARRITO FLOTANTE */
         .cart-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: #181818;
-            border-top: 2px solid var(--primary);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.8);
+            position: fixed; bottom: 0; left: 0; width: 100%; background: #181818;
+            border-top: 2px solid var(--primary); padding: 1rem 2rem; display: flex;
+            justify-content: space-between; align-items: center; z-index: 1000; box-shadow: 0 -5px 20px rgba(0,0,0,0.8);
         }
 
         .cart-info { font-size: 1rem; }
         .cart-count { background: var(--primary); color: #fff; padding: 0.2rem 0.6rem; border-radius: 50%; font-weight: bold; }
 
-        /* MODAL DE CARRITO / CONSOLIDACIÓN */
         .cart-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; padding: 1rem;
         }
 
         .cart-modal-content {
-            background: var(--card-bg);
-            border: 1px solid #444;
-            border-radius: 12px;
-            max-width: 600px;
-            width: 100%;
-            padding: 2rem;
-            position: relative;
+            background: var(--card-bg); border: 1px solid #444; border-radius: 12px;
+            max-width: 600px; width: 100%; padding: 2rem; position: relative;
         }
 
         .luthier-banner {
-            background: #2a2118;
-            border: 1px solid var(--primary);
-            border-radius: 8px;
-            padding: 1rem;
-            margin: 1rem 0;
-            font-size: 0.88rem;
+            background: #2a2118; border: 1px solid var(--primary); border-radius: 8px;
+            padding: 1rem; margin: 1rem 0; font-size: 0.88rem;
         }
     </style>
 </head>
@@ -294,7 +159,6 @@
         </nav>
     </header>
 
-    <!-- HERO + CHATBOT INTERACTIVO -->
     <section class="hero" id="hero">
         <div class="bot-card">
             <div class="bot-header">
@@ -317,7 +181,6 @@
         </div>
     </section>
 
-    <!-- FICHA DETALLE RECOMENDADA DE PRODUCTO -->
     <section id="detail-section">
         <div class="detail-view" id="product-detail">
             <div class="detail-grid">
@@ -329,8 +192,7 @@
                     <p id="dt-desc" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;"></p>
                     
                     <div style="background: #181818; padding: 1rem; border-radius: 8px; font-size: 0.85rem;">
-                        <p><strong>Pastillas:</strong> <span id="dt-pickups"></span></p>
-                        <p><strong>Cuerpo / Madera:</strong> Caoba / Arce</p>
+                        <p><strong>Configuración:</strong> <span id="dt-pickups"></span></p>
                         <p><strong>Ubicación Vendedor:</strong> Heredia, Costa Rica</p>
                     </div>
                 </div>
@@ -355,7 +217,7 @@
 
                     <h4 style="margin-bottom: 0.5rem;">Coordinar con Vendedor (Chat en Vivo)</h4>
                     <div class="seller-chat-box" id="chat-box">
-                        <div class="msg msg-seller"><strong>Carlos M. (Vendedor):</strong> ¡Buenas! La guitarra está impecable. ¿Te sirve vernos para probarla?</div>
+                        <div class="msg msg-seller"><strong>Vendedor Verificado:</strong> ¡Buenas! El equipo está impecable. ¿Te sirve vernos para probarlo?</div>
                     </div>
 
                     <div class="options-grid" style="margin-bottom: 1rem;">
@@ -369,7 +231,6 @@
         </div>
     </section>
 
-    <!-- CATÁLOGO GENERAL CON IMÁGENES CORREGIDAS -->
     <section id="cat-section">
         <h2 class="sec-title">Catálogo Destacado de Usados en Costa Rica</h2>
         <div class="grid-products">
@@ -383,7 +244,7 @@
                         <span class="prod-tag">Guitarra Eléctrica</span>
                         <h3 class="prod-title">Epiphone Les Paul Standard '60s</h3>
                         <div class="prod-price">₡340,000</div>
-                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">Estado: 9/10 | Vendedor: Juan (San José)</p>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">Estado: 9/10 | Juan (San José)</p>
                     </div>
                     <button class="btn-add-cart" onclick="addToCart('Epiphone Les Paul Standard', 340000, 'Juan (San José)')">+ Agregar al Carrito</button>
                 </div>
@@ -391,14 +252,14 @@
 
             <div class="prod-card">
                 <div class="prod-img-container">
-                    <img src="https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=600&q=80" class="prod-img" alt="Fender Stratocaster">
+                    <img src="https://images.unsplash.com/photo-1516924962500-2b4b3b99ea02?auto=format&fit=crop&w=600&q=80" class="prod-img" alt="Fender Stratocaster">
                 </div>
                 <div class="prod-body">
                     <div>
                         <span class="prod-tag">Guitarra Eléctrica</span>
                         <h3 class="prod-title">Fender Player Stratocaster HSS</h3>
                         <div class="prod-price">₡420,000</div>
-                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">Estado: 9.5/10 | Vendedor: Pedro (Alajuela)</p>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">Estado: 9.5/10 | Pedro (Alajuela)</p>
                     </div>
                     <button class="btn-add-cart" onclick="addToCart('Fender Stratocaster HSS', 420000, 'Pedro (Alajuela)')">+ Agregar al Carrito</button>
                 </div>
@@ -413,7 +274,7 @@
                         <span class="prod-tag">Pedal de Efectos</span>
                         <h3 class="prod-title">Ibanez TS9 Tube Screamer Original</h3>
                         <div class="prod-price">₡65,000</div>
-                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">Estado: 8.5/10 | Vendedor: Esteban (Cartago)</p>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">Estado: 8.5/10 | Esteban (Cartago)</p>
                     </div>
                     <button class="btn-add-cart" onclick="addToCart('Ibanez TS9 Tube Screamer', 65000, 'Esteban (Cartago)')">+ Agregar al Carrito</button>
                 </div>
@@ -428,7 +289,7 @@
                         <span class="prod-tag">Amplificadores</span>
                         <h3 class="prod-title">Marshall DSL40CR Tube Combo</h3>
                         <div class="prod-price">₡380,000</div>
-                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">Estado: 9/10 | Vendedor: Carlos (Heredia)</p>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">Estado: 9/10 | Carlos (Heredia)</p>
                     </div>
                     <button class="btn-add-cart" onclick="addToCart('Marshall DSL40CR Amp', 380000, 'Carlos (Heredia)')">+ Agregar al Carrito</button>
                 </div>
@@ -436,14 +297,14 @@
 
             <div class="prod-card">
                 <div class="prod-img-container">
-                    <img src="https://images.unsplash.com/photo-1516924962500-2b4b3b99ea02?auto=format&fit=crop&w=600&q=80" class="prod-img" alt="Gibson SG">
+                    <img src="https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=600&q=80" class="prod-img" alt="Gibson SG">
                 </div>
                 <div class="prod-body">
                     <div>
                         <span class="prod-tag">Guitarra Eléctrica</span>
                         <h3 class="prod-title">Gibson SG Standard Heritage Cherry</h3>
                         <div class="prod-price">₡620,000</div>
-                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">Estado: 9/10 | Vendedor: Mario (Escazú)</p>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">Estado: 9/10 | Mario (Escazú)</p>
                     </div>
                     <button class="btn-add-cart" onclick="addToCart('Gibson SG Standard', 620000, 'Mario (Escazú)')">+ Agregar al Carrito</button>
                 </div>
@@ -458,7 +319,7 @@
                         <span class="prod-tag">Pedal de Efectos</span>
                         <h3 class="prod-title">Electro-Harmonix Big Muff Pi Fuzz</h3>
                         <div class="prod-price">₡50,000</div>
-                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">Estado: 9/10 | Vendedor: Luis (Curridabat)</p>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">Estado: 9/10 | Luis (Curridabat)</p>
                     </div>
                     <button class="btn-add-cart" onclick="addToCart('Big Muff Pi Fuzz', 50000, 'Luis (Curridabat)')">+ Agregar al Carrito</button>
                 </div>
@@ -467,7 +328,6 @@
         </div>
     </section>
 
-    <!-- LUTHIERS AFILIADOS -->
     <section id="luthiers">
         <h2 class="sec-title">Luthiers Afiliados (Puntos de Inspección & Mantenimiento)</h2>
         <p style="color: var(--text-muted); margin-bottom: 2rem;">Lleva tu instrumento a calibrar o realiza la entrega de tu compra usada en un taller verificado.</p>
@@ -493,7 +353,6 @@
         </div>
     </section>
 
-    <!-- BARRA FLOTANTE DE CARRITO -->
     <div class="cart-bar" id="cart-bar" style="display: none;">
         <div class="cart-info">
             <span class="cart-count" id="cart-count">0</span> Artículos seleccionados | Total: <strong id="cart-total" style="color: var(--primary);">₡0</strong>
@@ -501,13 +360,11 @@
         <button class="btn-action" style="width: auto; padding: 0.6rem 1.5rem;" onclick="openCartModal()">VER CARRITO Y PROCESAR</button>
     </div>
 
-    <!-- MODAL DE CHECKOUT E INTELIGENCIA DE ENTREGA -->
     <div class="cart-modal" id="cart-modal">
         <div class="cart-modal-content">
             <h2>Tu Carrito de Compras</h2>
             <div id="cart-items-list" style="margin: 1rem 0; max-height: 150px; overflow-y: auto; font-size: 0.9rem;"></div>
 
-            <!-- BANNER DE CONSOLIDACIÓN EN LUTHIER -->
             <div class="luthier-banner" id="luthier-recommendation" style="display: none;">
                 <strong>🛠️ Sugerencia Inteligente de Entrega:</strong>
                 <p id="luthier-banner-text" style="margin-top: 0.4rem; color: #ddd;"></p>
@@ -528,71 +385,94 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT DE LÓGICA Y CARRITO -->
     <script>
-        // BASE DE DATOS TONE MATCH
         const gearDatabase = {
             slash: {
                 title: "Gibson Les Paul Studio '70s Tribute",
-                desc: "Recomendada para tono Hard Rock clásico. Mástil de caoba, pastillas Humbuckers de salida media para ese sustain icónico.",
-                price: "₡580,000",
-                rawPrice: 580000,
-                avg: "₡570,000 - ₡610,000",
-                ebay: "$950 USD",
-                pickups: "Mini-Humbuckers / Seymour Duncan Bridge",
+                desc: "Tono Hard Rock legendario. Caoba con pastillas Humbucker de alto sustain para solos definidos y riffs pesados.",
+                price: "₡580,000", rawPrice: 580000, avg: "₡570,000 - ₡610,000", ebay: "$950 USD",
+                pickups: "Humbuckers Alnico V",
                 img: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?auto=format&fit=crop&w=800&q=80"
-            },
-            cerati: {
-                title: "Fender Player Stratocaster HSS",
-                desc: "Perfecta para Rock en Español e Indie. Gran versatilidad entre limpios cristalinos y saturación melódica.",
-                price: "₡420,000",
-                rawPrice: 420000,
-                avg: "₡380,000 - ₡420,000",
-                ebay: "$650 USD",
-                pickups: "HSS (Single Coil + Humbucker)",
-                img: "https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=800&q=80"
             },
             angus: {
                 title: "Gibson SG Standard Heritage Cherry",
-                desc: "Tono directo, agudo y crunch puro. Cuerpo liviano de caoba para riffs potentes de corte clásico.",
-                price: "₡620,000",
-                rawPrice: 620000,
-                avg: "₡600,000 - ₡650,000",
-                ebay: "$1,100 USD",
+                desc: "Crunch puro de AC/DC. Mástil rápido, cuerpo liviano y tono agudo que corta perfecto en la mezcla.",
+                price: "₡620,000", rawPrice: 620000, avg: "₡600,000 - ₡650,000", ebay: "$1,100 USD",
                 pickups: "490R & 490T Humbuckers",
+                img: "https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=800&q=80"
+            },
+            cerati: {
+                title: "Fender Player Stratocaster HSS",
+                desc: "Mágica para limpios brillantes y saturaciones alternativas estilo Soda Stereo.",
+                price: "₡420,000", rawPrice: 420000, avg: "₡380,000 - ₡420,000", ebay: "$650 USD",
+                pickups: "Configuración HSS (Single + Humbucker)",
+                img: "https://images.unsplash.com/photo-1516924962500-2b4b3b99ea02?auto=format&fit=crop&w=800&q=80"
+            },
+            airbag: {
+                title: "Epiphone Les Paul Custom Black Beauty + Marshall Amp",
+                desc: "Combo potente de tres pastillas humbucker y overdrive valvular para tono potente de estadio.",
+                price: "₡450,000", rawPrice: 450000, avg: "₡430,000 - ₡480,000", ebay: "$750 USD",
+                pickups: "Triple Humbucker Seymour Duncan",
+                img: "https://images.unsplash.com/photo-1558098329-a11cff621064?auto=format&fit=crop&w=800&q=80"
+            },
+            srv: {
+                title: "Fender Vintera '60s Stratocaster Single-Coils",
+                desc: "Tono campana crujiente. Mástil de arce y dial de graves para respuesta dinámica de blues texano.",
+                price: "₡510,000", rawPrice: 510000, avg: "₡490,000 - ₡530,000", ebay: "$820 USD",
+                pickups: "Vintage Single Coils '60s",
                 img: "https://images.unsplash.com/photo-1516924962500-2b4b3b99ea02?auto=format&fit=crop&w=800&q=80"
             },
             santana: {
-                title: "PRS SE Santana / Standard 24",
-                desc: "Sustain infinito para solos melódicos de blues/rock. Mástil suave y tono cálido con mucho cuerpo.",
-                price: "₡360,000",
-                rawPrice: 360000,
-                avg: "₡350,000 - ₡380,000",
-                ebay: "$580 USD",
-                pickups: "PRS TCI 'S' Humbuckers",
+                title: "PRS SE Santana / Custom 24",
+                desc: "Sustain infinito para solos melódicos cálidos. Mástil suave de caoba.",
+                price: "₡360,000", rawPrice: 360000, avg: "₡350,000 - ₡380,000", ebay: "$580 USD",
+                pickups: "PRS TCI Humbuckers",
                 img: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?auto=format&fit=crop&w=800&q=80"
+            },
+            turner: {
+                title: "Epiphone Casino Semi-Hollow / Valvular Vox",
+                desc: "Resonancia acústica-eléctrica perfecta para indie rock británico y riffs rasgados.",
+                price: "₡380,000", rawPrice: 380000, avg: "₡360,000 - ₡400,000", ebay: "$600 USD",
+                pickups: "P-90 Dogear Pickups",
+                img: "https://images.unsplash.com/photo-1525201548942-d8732f6617a0?auto=format&fit=crop&w=800&q=80"
+            },
+            theedge: {
+                title: "Fender Deluxe Stratocaster + Memory Man Delay",
+                desc: "Tono atmosférico con eco rítmico y frecuencias ultra cristalinas.",
+                price: "₡490,000", rawPrice: 490000, avg: "₡470,000 - ₡510,000", ebay: "$800 USD",
+                pickups: "Noiseless Single Coils + Delay Pedal",
+                img: "https://images.unsplash.com/photo-1618609377864-68609b857e90?auto=format&fit=crop&w=800&q=80"
             }
         };
 
         let currentRecommendedItem = null;
         let cart = [];
 
-        // LÓGICA DE BÓT Y REGRESO
         function selectGenre(genreKey) {
             const msg = document.getElementById('bot-msg');
             const opts = document.getElementById('bot-opts');
 
-            msg.innerText = "Paso 2: ¿Cuál de estos artistas se acerca más a tu estilo o tono deseado?";
+            msg.innerText = "Paso 2: ¿Cuál de estos artistas se acerca más a tu tono deseado?";
             
             if (genreKey === 'hardrock') {
                 opts.innerHTML = `
                     <button class="btn-opt" onclick="selectArtist('slash')">Slash (Guns N' Roses)</button>
                     <button class="btn-opt" onclick="selectArtist('angus')">Angus Young (AC/DC)</button>
                 `;
-            } else {
+            } else if (genreKey === 'rockespanol') {
                 opts.innerHTML = `
                     <button class="btn-opt" onclick="selectArtist('cerati')">Cerati (Soda Stereo)</button>
+                    <button class="btn-opt" onclick="selectArtist('airbag')">Pato / Airbag</button>
+                `;
+            } else if (genreKey === 'blues') {
+                opts.innerHTML = `
+                    <button class="btn-opt" onclick="selectArtist('srv')">Stevie Ray Vaughan</button>
                     <button class="btn-opt" onclick="selectArtist('santana')">Carlos Santana</button>
+                `;
+            } else if (genreKey === 'indie') {
+                opts.innerHTML = `
+                    <button class="btn-opt" onclick="selectArtist('turner')">Alex Turner (Arctic Monkeys)</button>
+                    <button class="btn-opt" onclick="selectArtist('theedge')">The Edge (U2)</button>
                 `;
             }
         }
@@ -630,15 +510,14 @@
             
             setTimeout(() => {
                 if (text.includes('luthier')) {
-                    chatBox.innerHTML += `<div class="msg msg-seller"><strong>Carlos M. (Vendedor):</strong> ¡Excelente! Lo dejamos en Guitar Lab Heredia o San Pedro para entrega segura.</div>`;
+                    chatBox.innerHTML += `<div class="msg msg-seller"><strong>Vendedor:</strong> ¡Perfecto! Lo dejamos en Guitar Lab Heredia o San Pedro para entrega segura.</div>`;
                 } else {
-                    chatBox.innerHTML += `<div class="msg msg-seller"><strong>Carlos M. (Vendedor):</strong> Te veo en un centro comercial céntrico. Recuerda hacer la reserva en la web.</div>`;
+                    chatBox.innerHTML += `<div class="msg msg-seller"><strong>Vendedor:</strong> Te veo en un centro comercial céntrico. Recuerda reservar por la web.</div>`;
                 }
                 chatBox.scrollTop = chatBox.scrollHeight;
             }, 600);
         }
 
-        // LÓGICA DE CARRITO Y CONSOLIDACIÓN
         function addToCart(title, price, seller) {
             cart.push({ title, price, seller });
             updateCartBar();
@@ -646,7 +525,7 @@
 
         function addToCartCurrent() {
             if (currentRecommendedItem) {
-                addToCart(currentRecommendedItem.title, currentRecommendedItem.rawPrice, 'Carlos (Heredia)');
+                addToCart(currentRecommendedItem.title, currentRecommendedItem.rawPrice, 'Vendedor Destacado (Heredia)');
             }
         }
 
@@ -673,7 +552,6 @@
                 </div>`;
             });
 
-            // Lógica de recomendación de luthier
             const banner = document.getElementById('luthier-recommendation');
             const bannerText = document.getElementById('luthier-banner-text');
 
