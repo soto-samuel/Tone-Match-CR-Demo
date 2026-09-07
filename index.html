@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToneMatch CR | Global Gear Import & Tone Finder</title>
+    <title>ToneMatch CR | Global Music Gear Import</title>
     <style>
         :root {
             --primary: #ff5722;
@@ -35,14 +35,13 @@
         }
 
         .hero {
-            position: relative; min-height: 80vh; display: flex; align-items: center; justify-content: center; padding: 2rem;
-            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.9)), 
-                        url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+            position: relative; min-height: 75vh; display: flex; align-items: center; justify-content: center; padding: 2rem;
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.9)), #181818;
         }
 
         .bot-card {
             background: rgba(30, 30, 30, 0.95); border: 1px solid #333; border-radius: 12px;
-            width: 100%; max-width: 600px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5); backdrop-filter: blur(8px);
+            width: 100%; max-width: 650px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .bot-header { text-align: center; margin-bottom: 1.5rem; }
@@ -51,13 +50,12 @@
 
         .chat-bubble { background: #2a2a2a; padding: 1rem; border-radius: 8px; margin-bottom: 1.2rem; border-left: 4px solid var(--primary); font-size: 0.95rem; }
 
-        .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.8rem; }
+        .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.8rem; }
 
         .btn-opt {
             background: #2c2c2c; color: #fff; border: 1px solid #444; padding: 0.8rem;
             border-radius: 6px; cursor: pointer; transition: 0.2s; font-size: 0.85rem; text-align: center;
         }
-
         .btn-opt:hover { background: var(--primary); border-color: var(--primary); }
 
         .btn-reset {
@@ -65,49 +63,52 @@
             font-size: 0.8rem; text-decoration: underline; margin-top: 1rem; display: block; width: 100%; text-align: center;
         }
 
-        section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
-        .sec-title { font-size: 1.6rem; margin-bottom: 2rem; border-left: 4px solid var(--primary); padding-left: 1rem; }
+        section { padding: 3rem 2rem; max-width: 1250px; margin: 0 auto; }
+        .sec-title { font-size: 1.6rem; margin-bottom: 0.5rem; border-left: 4px solid var(--primary); padding-left: 1rem; }
 
-        .grid-products { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+        .cat-filter-tabs { display: flex; gap: 0.5rem; margin-top: 1.5rem; flex-wrap: wrap; }
+        .tab-btn { background: #252525; color: #ccc; border: 1px solid #444; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; font-size: 0.85rem; }
+        .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+        .grid-products { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
 
         .prod-card {
             background: var(--card-bg); border-radius: 8px; overflow: hidden; border: 1px solid #333;
-            transition: 0.3s; display: flex; flex-direction: column;
+            transition: 0.3s; display: flex; flex-direction: column; cursor: pointer;
         }
+        .prod-card:hover { transform: translateY(-4px); border-color: var(--primary); }
 
-        .prod-card:hover { transform: translateY(-5px); border-color: var(--primary); }
-
-        .prod-img-container { height: 200px; width: 100%; overflow: hidden; background: #000; position: relative; }
-        .prod-img { width: 100%; height: 100%; object-fit: cover; }
-
+        .prod-img-container { height: 180px; width: 100%; background: #151515; position: relative; display: flex; align-items: center; justify-content: center; }
+        
         .badge-import {
-            position: absolute; top: 10px; right: 10px; background: rgba(0, 0, 0, 0.8);
-            color: var(--accent); font-size: 0.7rem; padding: 0.3rem 0.6rem; border-radius: 4px; border: 1px solid var(--accent);
+            position: absolute; top: 10px; right: 10px; background: rgba(0, 0, 0, 0.85);
+            color: var(--accent); font-size: 0.68rem; padding: 0.2rem 0.5rem; border-radius: 4px; border: 1px solid var(--accent);
         }
 
-        .prod-body { padding: 1.2rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .prod-tag { font-size: 0.75rem; background: #333; padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--accent); width: fit-content; }
-        .prod-title { font-size: 1.1rem; margin: 0.5rem 0; }
-        .prod-price { font-size: 1.2rem; font-weight: bold; color: var(--primary); margin-bottom: 0.5rem; }
+        .prod-body { padding: 1rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .prod-tag { font-size: 0.7rem; background: #333; padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--accent); width: fit-content; }
+        .prod-title { font-size: 1rem; margin: 0.4rem 0; }
+        .prod-price { font-size: 1.15rem; font-weight: bold; color: var(--primary); margin-bottom: 0.4rem; }
 
-        .btn-import-order {
-            background: var(--primary); color: #fff; border: none; padding: 0.7rem;
-            border-radius: 4px; cursor: pointer; width: 100%; font-weight: bold; font-size: 0.85rem; transition: 0.2s;
+        .btn-view-detail {
+            background: #2a2a2a; color: #fff; border: 1px solid var(--primary); padding: 0.6rem;
+            border-radius: 4px; cursor: pointer; width: 100%; font-weight: bold; font-size: 0.8rem; transition: 0.2s; text-align: center;
         }
-        .btn-import-order:hover { background: #e64a19; }
+        .btn-view-detail:hover { background: var(--primary); }
 
+        /* MODAL DE DETALLE Y CHECKOUT */
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; padding: 1rem;
+            background: rgba(0,0,0,0.88); z-index: 2000; align-items: center; justify-content: center; padding: 1rem;
         }
 
         .modal-content {
             background: var(--card-bg); border: 1px solid #444; border-radius: 12px;
-            max-width: 650px; width: 100%; padding: 2rem; position: relative; max-height: 90vh; overflow-y: auto;
+            max-width: 750px; width: 100%; padding: 2rem; position: relative; max-height: 90vh; overflow-y: auto;
         }
 
-        .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1rem 0; }
-        @media (max-width: 600px) { .modal-grid { grid-template-columns: 1fr; } }
+        .modal-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 1.5rem; margin: 1rem 0; }
+        @media (max-width: 650px) { .modal-grid { grid-template-columns: 1fr; } }
 
         .luthier-box {
             background: #25201b; border: 1px solid var(--primary); border-radius: 8px;
@@ -125,6 +126,8 @@
             background: #14281d; border: 1px solid var(--accent); padding: 0.8rem;
             border-radius: 6px; color: var(--accent); font-size: 0.8rem; margin-bottom: 1rem;
         }
+
+        svg.gear-svg { width: 65%; height: 75%; }
     </style>
 </head>
 <body>
@@ -132,8 +135,8 @@
     <header>
         <div class="logo">TONEMATCH <span>CR</span></div>
         <nav>
-            <a href="#hero" id="nav-finder">Tone Finder</a>
-            <a href="#cat-section" id="nav-catalog">Catálogo Importación</a>
+            <a href="#hero" id="nav-finder">Tone Finder IA</a>
+            <a href="#cat-section" id="nav-catalog">Catálogo Completo</a>
             <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
                 <option value="es">🇪🇸 Español</option>
                 <option value="en">🇺🇸 English</option>
@@ -144,124 +147,63 @@
     <section class="hero" id="hero">
         <div class="bot-card">
             <div class="bot-header">
-                <h1 id="txt-bot-title">¿Qué sonido estás buscando?</h1>
-                <p id="txt-bot-sub">Tu asistente de importación analiza el catálogo internacional para recomendarte el equipo exacto.</p>
+                <h1 id="txt-bot-title">Asistente de Tono e Importación</h1>
+                <p id="txt-bot-sub">Buscamos el instrumento, amplificador o pedal perfecto según tu estilo y presupuesto.</p>
             </div>
             
             <div id="bot-flow">
-                <div class="chat-bubble" id="bot-msg">
-                    Paso 1: Selecciona el estilo de música que más te gusta tocar:
-                </div>
-                <div class="options-grid" id="bot-opts">
-                    <button class="btn-opt" onclick="stepGenre('rock')">Hard Rock / Metal</button>
-                    <button class="btn-opt" onclick="stepGenre('latino')">Rock en Español / Indie</button>
-                    <button class="btn-opt" onclick="stepGenre('blues')">Blues / Funk / Jazz</button>
-                </div>
+                <div class="chat-bubble" id="bot-msg">Paso 1: ¿Qué tipo de equipo estás buscando integrar a tu setup?</div>
+                <div class="options-grid" id="bot-opts"></div>
             </div>
-            <button class="btn-reset" onclick="resetBot()" id="txt-reset">🔄 Reiniciar filtro de tono</button>
+            <button class="btn-reset" onclick="resetBot()" id="txt-reset">🔄 Reiniciar filtro de búsqueda</button>
         </div>
     </section>
 
     <section id="cat-section">
-        <h2 class="sec-title" id="txt-cat-title">Catálogo Curado para Importación Directa</h2>
-        <p style="color: var(--text-muted); margin-bottom: 2rem;" id="txt-cat-sub">Todos los productos vienen asegurados desde EE.UU. e incluyen costo de flete, impuestos y nacionalización.</p>
+        <h2 class="sec-title" id="txt-cat-title">Catálogo Completo de Importación Directa</h2>
+        <p style="color: var(--text-muted);" id="txt-cat-sub">Precios reales puestos en Costa Rica. Incluye flete, impuestos de aduana y garantía de importación.</p>
         
-        <div class="grid-products">
-            
-            <div class="prod-card">
-                <div class="prod-img-container">
-                    <span class="badge-import">✈️ Importación (10-14 Días)</span>
-                    <img src="https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?auto=format&fit=crop&w=600&q=80" class="prod-img" alt="Gibson Les Paul Studio">
-                </div>
-                <div class="prod-body">
-                    <div>
-                        <span class="prod-tag">Guitarra Eléctrica</span>
-                        <h3 class="prod-title">Gibson Les Paul Studio '70s Tribute</h3>
-                        <div class="prod-price">₡580,000 <span style="font-size:0.75rem; color:#aaa; font-weight:normal;">(Todo Incluido)</span></div>
-                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">Cuerpo de Caoba • Pastillas Mini-Humbuckers • Tono Hard Rock / Slash</p>
-                    </div>
-                    <button class="btn-import-order" onclick="openImportModal('Gibson Les Paul Studio 70s', '₡580,000', 'https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?auto=format&fit=crop&w=600&q=80')">RESERVAR Y PEDIR BAJO ORDEN</button>
-                </div>
-            </div>
-
-            <div class="prod-card">
-                <div class="prod-img-container">
-                    <span class="badge-import">✈️ Importación (10-14 Días)</span>
-                    <img src="https://images.unsplash.com/photo-1516924962500-2b4b3b99ea02?auto=format&fit=crop&w=600&q=80" class="prod-img" alt="Fender Stratocaster">
-                </div>
-                <div class="prod-body">
-                    <div>
-                        <span class="prod-tag">Guitarra Eléctrica</span>
-                        <h3 class="prod-title">Fender Player Stratocaster HSS</h3>
-                        <div class="prod-price">₡420,000 <span style="font-size:0.75rem; color:#aaa; font-weight:normal;">(Todo Incluido)</span></div>
-                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">Mástil de Arce • Pastilla Humbucker Bridge + 2 Single Coils • Tono Cerati / Versátil</p>
-                    </div>
-                    <button class="btn-import-order" onclick="openImportModal('Fender Player Stratocaster HSS', '₡420,000', 'https://images.unsplash.com/photo-1516924962500-2b4b3b99ea02?auto=format&fit=crop&w=600&q=80')">RESERVAR Y PEDIR BAJO ORDEN</button>
-                </div>
-            </div>
-
-            <div class="prod-card">
-                <div class="prod-img-container">
-                    <span class="badge-import">✈️ Importación (10-14 Días)</span>
-                    <img src="https://images.unsplash.com/photo-1558098329-a11cff621064?auto=format&fit=crop&w=600&q=80" class="prod-img" alt="Marshall Amplifier">
-                </div>
-                <div class="prod-body">
-                    <div>
-                        <span class="prod-tag">Amplificador Valvular</span>
-                        <h3 class="prod-title">Marshall DSL40CR Tube Combo</h3>
-                        <div class="prod-price">₡380,000 <span style="font-size:0.75rem; color:#aaa; font-weight:normal;">(Todo Incluido)</span></div>
-                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">40W Valvular EL34 • Parlante Celestion V-Type • Tono Crunch Británico</p>
-                    </div>
-                    <button class="btn-import-order" onclick="openImportModal('Marshall DSL40CR Tube Combo', '₡380,000', 'https://images.unsplash.com/photo-1558098329-a11cff621064?auto=format&fit=crop&w=600&q=80')">RESERVAR Y PEDIR BAJO ORDEN</button>
-                </div>
-            </div>
-
-            <div class="prod-card">
-                <div class="prod-img-container">
-                    <span class="badge-import">✈️ Importación (7-10 Días)</span>
-                    <img src="https://images.unsplash.com/photo-1525201548942-d8732f6617a0?auto=format&fit=crop&w=600&q=80" class="prod-img" alt="Ibanez Tube Screamer">
-                </div>
-                <div class="prod-body">
-                    <div>
-                        <span class="prod-tag">Pedal de Efectos</span>
-                        <h3 class="prod-title">Ibanez TS9 Tube Screamer Original</h3>
-                        <div class="prod-price">₡65,000 <span style="font-size:0.75rem; color:#aaa; font-weight:normal;">(Todo Incluido)</span></div>
-                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">Overdrive clásico analógico • Boost de medios perfecto para solos de Blues y Rock</p>
-                    </div>
-                    <button class="btn-import-order" onclick="openImportModal('Ibanez TS9 Tube Screamer', '₡65,000', 'https://images.unsplash.com/photo-1525201548942-d8732f6617a0?auto=format&fit=crop&w=600&q=80')">RESERVAR Y PEDIR BAJO ORDEN</button>
-                </div>
-            </div>
-
+        <div class="cat-filter-tabs">
+            <button class="tab-btn active" onclick="filterCat('all', this)" id="tab-all">Todos</button>
+            <button class="tab-btn" onclick="filterCat('guitar', this)" id="tab-guitars">Guitarras</button>
+            <button class="tab-btn" onclick="filterCat('amp', this)" id="tab-amps">Amplificadores</button>
+            <button class="tab-btn" onclick="filterCat('pedal', this)" id="tab-pedals">Pedales & Multiefectos</button>
         </div>
+
+        <div class="grid-products" id="products-container"></div>
     </section>
 
+    <!-- MODAL DETALLE DE PRODUCTO Y RESERVA -->
     <div class="modal" id="importModal">
         <div class="modal-content">
             <h2 id="modal-item-title" style="color: var(--primary);"></h2>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">Tiempo estimado de llegada a Costa Rica: <strong>10 a 14 días hábiles</strong>.</p>
+            <div style="font-size:0.8rem; color:var(--accent); font-weight:bold; margin-bottom:0.5rem;" id="modal-item-tag"></div>
+            <p style="font-size: 0.85rem; color: #ccc; margin-bottom:0.8rem;" id="modal-item-desc"></p>
+            
+            <p style="font-size: 0.85rem; color: var(--text-muted);" id="lbl-time-msg">Tiempo estimado de llegada a Costa Rica: <strong>10 a 14 días hábiles</strong>.</p>
 
-            <div class="info-guarantee">
+            <div class="info-guarantee" id="lbl-guarantee">
                 🛡️ <strong>Garantía Cero Riesgo:</strong> Ingresas los datos de tu tarjeta para autorizar el pedido, pero <strong>el cobro NO se realiza hoy</strong>. El dinero se liquida únicamente cuando el producto llega al país y lo recibes verificado.
             </div>
 
             <div class="modal-grid">
-                <div>
-                    <img id="modal-item-img" src="" style="width: 100%; border-radius: 8px; height: 160px; object-fit: cover; margin-bottom: 0.5rem;">
-                    <div style="font-size: 1.2rem; font-weight: bold;" id="modal-item-price"></div>
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; background:#111; border-radius:8px; padding:1rem;">
+                    <div id="modal-svg-container" style="width:100%; height:130px; display:flex; justify-content:center;"></div>
+                    <div style="font-size: 1.3rem; font-weight: bold; margin-top:0.5rem; color:var(--primary);" id="modal-item-price"></div>
                 </div>
 
                 <div>
                     <div class="input-group">
-                        <label>Nombre Completo (Tarjetahabiente):</label>
+                        <label id="lbl-card-name">Nombre Completo (Tarjetahabiente):</label>
                         <input type="text" placeholder="Ej. Samuel Soto">
                     </div>
                     <div class="input-group">
-                        <label>Número de Tarjeta (Reserva sin cobro inmediato):</label>
+                        <label id="lbl-card-num">Número de Tarjeta (Reserva sin cobro inmediato):</label>
                         <input type="text" placeholder="4532 •••• •••• 8901">
                     </div>
                     <div style="display: flex; gap: 0.5rem;">
                         <div class="input-group" style="width: 50%;">
-                            <label>Vencimiento:</label>
+                            <label id="lbl-card-exp">Vencimiento:</label>
                             <input type="text" placeholder="MM/AA">
                         </div>
                         <div class="input-group" style="width: 50%;">
@@ -276,17 +218,17 @@
                 <label style="display: flex; gap: 0.8rem; align-items: flex-start; cursor: pointer;">
                     <input type="checkbox" id="chkLuthier" checked style="margin-top: 0.2rem; width: 18px; height: 18px;">
                     <div>
-                        <strong style="color: #fff;">🛠️ Incluir Servicio VIP de Luthier Afiliado (+₡15,000)</strong>
-                        <p style="color: #ccc; font-size: 0.8rem; margin-top: 0.2rem;">
-                            Al llegar a Costa Rica, tu instrumento no va a una bodega fría: pasa directamente al taller del Luthier. Incluye **desempaque, inspección electrónica, limpieza, calibración personalizada y cambio de cuerdas gratis**. Te entregamos el instrumento 100% listo para tocar.
+                        <strong style="color: #fff;" id="lbl-luthier-title">🛠️ Incluir Servicio VIP de Luthier Afiliado (+₡15,000)</strong>
+                        <p style="color: #ccc; font-size: 0.8rem; margin-top: 0.2rem;" id="lbl-luthier-desc">
+                            Al llegar a Costa Rica, tu equipo pasa directamente al taller del Luthier. Incluye **desempaque, inspección electrónica, limpieza, calibración personalizada y cambio de cuerdas gratis**.
                         </p>
                     </div>
                 </label>
             </div>
 
             <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-                <button class="btn-opt" style="width: 40%;" onclick="closeImportModal()">Cancelar</button>
-                <button class="btn-import-order" style="width: 60%;" onclick="confirmOrder()">CONFIRMAR PEDIDO E IMPORTAR</button>
+                <button class="btn-opt" style="width: 40%;" onclick="closeImportModal()" id="btn-cancel">Cerrar</button>
+                <button class="btn-view-detail" style="width: 60%; background:var(--primary);" onclick="confirmOrder()" id="btn-confirm">CONFIRMAR PEDIDO E IMPORTAR</button>
             </div>
         </div>
     </div>
@@ -294,69 +236,233 @@
     <script>
         let currentLang = 'es';
         let currentStep = 'start';
-        let currentGenre = null;
+        let selectedCategory = null;
+        let selectedBudget = null;
+
+        // BASE DE DATOS DE PRODUCTOS CON PRECIOS REALES EN CR
+        const productsDB = [
+            // GUITARRAS
+            {
+                id: 'lp_gibson', cat: 'guitar', title: "Gibson Les Paul Studio '70s Tribute", price: "₡580,000", rawPrice: 580000,
+                desc: "Cuerpo de caoba con tapa de arce, mástil de caoba perfil slim '70s y pastillas Mini-Humbuckers. El tono clásico de rock pesado con enorme sustain.",
+                tag: "Guitarra Eléctrica", type: 'lp'
+            },
+            {
+                id: 'sg_gibson', cat: 'guitar', title: "Gibson SG Standard Heritage Cherry", price: "₡620,000", rawPrice: 620000,
+                desc: "Icono del rock con cuerpo ultra liviano de caoba, diapasón de palo de rosa y pastillas 490R/490T Humbuckers. Respuesta mordaz de tono agudo.",
+                tag: "Guitarra Eléctrica", type: 'sg'
+            },
+            {
+                id: 'es345_gibson', cat: 'guitar', title: "Gibson ES-345 Semi-Hollowbody", price: "₡1,250,000", rawPrice: 1250000,
+                desc: "Cuerpo semi-hueco de arce laminado con bloque central de membranas, pastillas Calibrated T-Type Humbuckers y varitone clásico. La cumbre del blues/jazz.",
+                tag: "Guitarra Semi-Hueca", type: 'es'
+            },
+            {
+                id: 'strat_squier', cat: 'guitar', title: "Squier Classic Vibe '60s Stratocaster", price: "₡245,000", rawPrice: 2450000,
+                desc: "Cuerpo de nato, tres pastillas de alnico diseñadas por Fender, mástil en 'C' suave con acabado brillante. Relación calidad/precio imbatible.",
+                tag: "Guitarra Eléctrica", type: 'strat'
+            },
+            {
+                id: 'lp_epi', cat: 'guitar', title: "Epiphone Les Paul Custom Black Beauty", price: "₡395,000", rawPrice: 395000,
+                desc: "Elegancia total con tres pastillas Humbucker ProBucker, herrajes dorados, fileteado multicapa y cuerpo de caoba. Tono potente y estética de gala.",
+                tag: "Guitarra Eléctrica", type: 'lp'
+            },
+            {
+                id: 'sg_epi', cat: 'guitar', title: "Epiphone SG Standard '61 Vintage", price: "₡285,000", rawPrice: 285000,
+                desc: "Cuerpo de caoba, pastillas ProBucker-2 y ProBucker-3 con potenciómetros CTS. Tono agresivo de corte vintage ideal para rock.",
+                tag: "Guitarra Eléctrica", type: 'sg'
+            },
+            {
+                id: 'strat_fender', cat: 'guitar', title: "Fender Player II Stratocaster HSS", price: "₡435,000", rawPrice: 435000,
+                desc: "Mástil de arce satinado con bordes redondeados, pastilla Player Series Humbucker en puente y dos Single-Coils alnico 5. Versatilidad total.",
+                tag: "Guitarra Eléctrica", type: 'strat'
+            },
+            {
+                id: 'tele_fender', cat: 'guitar', title: "Fender Player II Telecaster", price: "₡415,000", rawPrice: 415000,
+                desc: "Cuerpo de aliso, pastillas alnico V Single-Coil Tele con el clásico 'twang' y ataque definido. Ideal para country, indie y rock.",
+                tag: "Guitarra Eléctrica", type: 'tele'
+            },
+            {
+                id: 'prs_custom', cat: 'guitar', title: "PRS SE Custom 24 / Santana", price: "₡365,000", rawPrice: 365000,
+                desc: "Tapa de arce figurado con chapa de arce flameado, 24 trastes, trémolo diseñado por PRS y pastillas 85/15 'S'. Sustain infinito y suavidad.",
+                tag: "Guitarra Eléctrica", type: 'prs'
+            },
+            {
+                id: 'jackson_soloist', cat: 'guitar', title: "Jackson Pro Series Soloist SL2", price: "₡510,000", rawPrice: 510000,
+                desc: "Mástil a través del cuerpo (Neck-Through), puente Floyd Rose 1000 Series y pastillas direct-mount Seymour Duncan Distortion. Diseñada para shred y metal.",
+                tag: "Guitarra Eléctrica", type: 'jackson'
+            },
+
+            // AMPLIFICADORES
+            {
+                id: 'amp_marshall', cat: 'amp', title: "Marshall DSL40CR Tube Combo", price: "₡380,000", rawPrice: 380000,
+                desc: "Amplificador 100% valvular de 40W con válvulas EL34, parlante Celestion V-Type de 12\", dos canales independientes y reverb digital ajustarle.",
+                tag: "Ampli Valvular", type: 'amp'
+            },
+            {
+                id: 'amp_mustang', cat: 'amp', title: "Fender Mustang III V2 (Pedalera Inclinada)", price: "₡210,000", rawPrice: 210000,
+                desc: "Combo de 100W con parlante Celestion de 12\", 17 modelos de amplificadores y 44 efectos integrados. Incluye footswitch para control en vivo.",
+                tag: "Ampli Digital / All-in-One", type: 'amp'
+            },
+            {
+                id: 'amp_orange', cat: 'amp', title: "Orange Crush 35RT Combo", price: "₡165,000", rawPrice: 165000,
+                desc: "Combo analógico de transistores de 35W, 2 canales con alta ganancia, afinador integrado, reverb de resorte digital y simulador de cabina en salida de audífonos.",
+                tag: "Ampli Transistores", type: 'amp'
+            },
+
+            // PEDALES Y MULTIEFECTOS
+            {
+                id: 'pedal_ts9', cat: 'pedal', title: "Ibanez TS9 Tube Screamer", price: "₡65,000", rawPrice: 65000,
+                desc: "El overdrive analógico más legendario de la historia. Boost de frecuencias medias para empujar amplificadores valvulares en solos.",
+                tag: "Pedal Overdrive", type: 'pedal'
+            },
+            {
+                id: 'pedal_muff', cat: 'pedal', title: "Electro-Harmonix Big Muff Pi Fuzz", price: "₡52,000", rawPrice: 52000,
+                desc: "Pedal de Fuzz/Distorsión armónica legendario. Ofrece paredes masivas de sonido saturado sostenido al estilo de Gilmour o Billy Corgan.",
+                tag: "Pedal Fuzz", type: 'pedal'
+            },
+            {
+                id: 'pedal_delay', cat: 'pedal', title: "MXR M169 Carbon Copy Analog Delay", price: "₡88,000", rawPrice: 88000,
+                desc: "Delay 100% analógico con tecnología Bucket-Brigade. Hasta 600ms de retardo con modulaciones cálidas y vintage.",
+                tag: "Pedal Delay", type: 'pedal'
+            },
+            {
+                id: 'pedal_ds1', cat: 'pedal', title: "Boss DS-1 Distortion", price: "₡42,000", rawPrice: 42000,
+                desc: "El pedal de distorsión naranja clásico. Entrega dinámicas duras manteniendo la definición de cada cuerda.",
+                tag: "Pedal Distorsión", type: 'pedal'
+            },
+            {
+                id: 'pedal_timeline', cat: 'pedal', title: "Strymon Timeline Multidelay", price: "₡260,000", rawPrice: 260000,
+                desc: "Pedalera de procesamiento de retardo de grado de estudio. 12 máquinas de delay únicas, implementación MIDI y 200 presets integrados.",
+                tag: "Pedalera de Efectos", type: 'pedal'
+            },
+            {
+                id: 'multi_helix', cat: 'pedal', title: "Line 6 Helix LT Guitar Processor", price: "₡680,000", rawPrice: 680000,
+                desc: "Procesador multiefectos y modelador de amplificadores de grado profesional. Doble motor DSP HX, interfaz de audio USB y pantalla a color.",
+                tag: "Pedalera Multiefectos", type: 'pedal'
+            }
+        ];
 
         const translations = {
             es: {
-                finder: "Tone Finder",
-                catalog: "Catálogo Importación",
-                botTitle: "¿Qué sonido estás buscando?",
-                botSub: "Tu asistente de importación analiza el catálogo internacional para recomendarte el equipo exacto.",
-                reset: "🔄 Reiniciar filtro de tono",
-                catTitle: "Catálogo Curado para Importación Directa",
-                catSub: "Todos los productos vienen asegurados desde EE.UU. e incluyen costo de flete, impuestos y nacionalización.",
-                step1Msg: "Paso 1: Selecciona el estilo de música que más te gusta tocar:",
-                optHardRock: "Hard Rock / Metal",
-                optLatino: "Rock en Español / Indie",
-                optBlues: "Blues / Funk / Jazz",
-                step2RockMsg: "Paso 2: Para Rock / Metal, ¿qué tipo de ganancia o respuesta prefieres?",
-                optLesPaul: "Sustain denso y cálido (Slash / Guns N' Roses)",
-                optMarshall: "Crunch británico con punch (AC/DC / Hard Rock)",
-                step2LatinoMsg: "Paso 2: ¿Qué tipo de textura buscas para Rock Latino / Indie?",
-                optStrat: "Limpios cristalinos + solos versátiles (Soda Stereo / Cerati)",
-                optScreamer: "Overdrive analógico para empujar tu ampli (Blues / Rock)",
-                step2BluesMsg: "Paso 2: ¿Cuál es tu prioridad dinámica?",
-                optStratBlues: "Respuesta dinámica al tacto (Stevie Ray Vaughan)",
-                optScreamerBlues: "Saturación de medios clásica (SRV / Clapton)"
+                finder: "Tone Finder IA", catalog: "Catálogo Completo",
+                botTitle: "Asistente de Tono e Importación",
+                botSub: "Buscamos el instrumento, amplificador o pedal perfecto según tu estilo y presupuesto.",
+                reset: "🔄 Reiniciar filtro de búsqueda",
+                catTitle: "Catálogo Completo de Importación Directa",
+                catSub: "Precios reales puestos en Costa Rica. Incluye flete, impuestos de aduana y garantía de importación.",
+                tabs: { all: "Todos", guitars: "Guitarras", amps: "Amplificadores", pedals: "Pedales & Multiefectos" },
+                btnDetail: "VER FICHA Y RESERVAR",
+                step1Msg: "Paso 1: ¿Qué tipo de equipo estás buscando integrar a tu setup?",
+                optCatGuitar: "Guitarras Eléctricas", optCatAmp: "Amplificadores", optCatPedal: "Pedales / Multiefectos", optCatCombo: "Combo / Todo en Uno (Fender Mustang)",
+                step2BudgetMsg: "Paso 2: ¿Cuál es tu presupuesto estimado?",
+                optB1: "₡40,000 - ₡250,000 (Económico / Pedales)", optB2: "₡250,000 - ₡600,000 (Gama Media / Estándar)", optB3: "₡600,000+ (Gama Alta / Profesional)",
+                step3StyleMsg: "Paso 3: Selecciona tu estilo musical principal:",
+                optHardRock: "Hard Rock / Metal", optIndie: "Rock en Español / Indie", optBlues: "Blues / Classic Rock",
+                timeMsg: "Tiempo estimado de llegada a Costa Rica: <strong>10 a 14 días hábiles</strong>.",
+                guarantee: "🛡️ <strong>Garantía Cero Riesgo:</strong> Ingresas los datos de tu tarjeta para autorizar el pedido, pero <strong>el cobro NO se realiza hoy</strong>. El dinero se liquida únicamente cuando el producto llega al país y lo recibes verificado.",
+                cardName: "Nombre Completo (Tarjetahabiente):", cardNum: "Número de Tarjeta (Reserva sin cobro inmediato):", cardExp: "Vencimiento:",
+                luthierTitle: "🛠️ Incluir Servicio VIP de Luthier Afiliado (+₡15,000)",
+                luthierDesc: "Al llegar a Costa Rica, tu equipo pasa directamente al taller del Luthier. Incluye **desempaque, inspección electrónica, limpieza, calibración personalizada y cambio de cuerdas gratis**.",
+                btnCancel: "Cerrar", btnConfirm: "CONFIRMAR PEDIDO E IMPORTAR",
+                alertOk: "¡Pedido de importación pre-autorizado con éxito!\n\nTu tarjeta NO ha sido cobrada aún. Tiempo estimado de entrega: 10 a 14 días.",
+                alertLuthier: "\n\n🛠️ Incluye inspección, calibración y limpieza profesional en taller de Luthier Afiliado antes de la entrega."
             },
             en: {
-                finder: "Tone Finder",
-                catalog: "Import Catalog",
-                botTitle: "What sound are you looking for?",
-                botSub: "Your import assistant analyzes global gear lists to match your exact tone.",
-                reset: "🔄 Reset Tone Filter",
-                catTitle: "Curated Direct Import Catalog",
-                catSub: "All products are fully insured from the US, including freight, taxes, and customs duties.",
-                step1Msg: "Step 1: Select the style of music you love to play:",
-                optHardRock: "Hard Rock / Metal",
-                optLatino: "Latin Rock / Indie",
-                optBlues: "Blues / Funk / Jazz",
-                step2RockMsg: "Step 2: For Rock / Metal, what type of gain response do you prefer?",
-                optLesPaul: "Warm & thick sustain (Slash / Guns N' Roses)",
-                optMarshall: "Punchy British crunch (AC/DC / Hard Rock)",
-                step2LatinoMsg: "Step 2: What sound texture do you need for Latin Rock / Indie?",
-                optStrat: "Pristine cleans + versatile leads (Soda Stereo / Cerati)",
-                optScreamer: "Analog overdrive to push your amp (Blues / Rock)",
-                step2BluesMsg: "Step 2: What is your dynamic priority?",
-                optStratBlues: "Touch-sensitive dynamic response (Stevie Ray Vaughan)",
-                optScreamerBlues: "Classic mid-boost saturation (SRV / Clapton)"
+                finder: "Tone Finder AI", catalog: "Full Catalog",
+                botTitle: "Tone & Import Assistant",
+                botSub: "We find the perfect guitar, amp, or pedal based on your style and budget.",
+                reset: "🔄 Reset Search Filter",
+                catTitle: "Full Direct Import Catalog",
+                catSub: "Real landed prices in Costa Rica. Includes freight, customs taxes, and import warranty.",
+                tabs: { all: "All", guitars: "Guitars", amps: "Amplifiers", pedals: "Pedals & Multi-FX" },
+                btnDetail: "VIEW DETAILS & RESERVE",
+                step1Msg: "Step 1: What type of gear are you looking to add to your setup?",
+                optCatGuitar: "Electric Guitars", optCatAmp: "Amplifiers", optCatPedal: "Pedals / Multi-FX", optCatCombo: "Combo / All-in-One (Fender Mustang)",
+                step2BudgetMsg: "Step 2: What is your target budget?",
+                optB1: "₡40,000 - ₡250,000 (Budget / Pedals)", optB2: "₡250,000 - ₡600,000 (Mid-Range / Standard)", optB3: "₡600,000+ (High-End / Professional)",
+                step3StyleMsg: "Step 3: Select your main musical style:",
+                optHardRock: "Hard Rock / Metal", optIndie: "Latin Rock / Indie", optBlues: "Blues / Classic Rock",
+                timeMsg: "Estimated arrival time to Costa Rica: <strong>10 to 14 business days</strong>.",
+                guarantee: "🛡️ <strong>Zero-Risk Guarantee:</strong> Enter your card details to authorize the order, but <strong>NO charge is made today</strong>. Funds are settled only when the product arrives in Costa Rica and is verified.",
+                cardName: "Full Name (Cardholder):", cardNum: "Card Number (Hold without immediate charge):", cardExp: "Expiration:",
+                luthierTitle: "🛠️ Include VIP Luthier Service (+₡15,000)",
+                luthierDesc: "Upon arrival in Costa Rica, your gear goes straight to our affiliated Luthier shop. Includes **unboxing, electronic check, cleaning, custom setup, and free re-stringing**.",
+                btnCancel: "Close", btnConfirm: "CONFIRM ORDER & IMPORT",
+                alertOk: "Import order pre-authorized successfully!\n\nYour card has NOT been charged today. Estimated arrival: 10 to 14 business days.",
+                alertLuthier: "\n\n🛠️ Includes professional luthier inspection, custom setup, and cleaning before final delivery."
             }
         };
 
         function changeLanguage(lang) {
             currentLang = lang;
-            document.getElementById('nav-finder').innerText = translations[lang].finder;
-            document.getElementById('nav-catalog').innerText = translations[lang].catalog;
-            document.getElementById('txt-bot-title').innerText = translations[lang].botTitle;
-            document.getElementById('txt-bot-sub').innerText = translations[lang].botSub;
-            document.getElementById('txt-reset').innerText = translations[lang].reset;
-            document.getElementById('txt-cat-title').innerText = translations[lang].catTitle;
-            document.getElementById('txt-cat-sub').innerText = translations[lang].catSub;
+            const t = translations[lang];
 
-            // Renderiza el chatbot en el idioma activo manteniendo el paso actual
+            document.getElementById('nav-finder').innerText = t.finder;
+            document.getElementById('nav-catalog').innerText = t.catalog;
+            document.getElementById('txt-bot-title').innerText = t.botTitle;
+            document.getElementById('txt-bot-sub').innerText = t.botSub;
+            document.getElementById('txt-reset').innerText = t.reset;
+            document.getElementById('txt-cat-title').innerText = t.catTitle;
+            document.getElementById('txt-cat-sub').innerText = t.catSub;
+
+            document.getElementById('tab-all').innerText = t.tabs.all;
+            document.getElementById('tab-guitars').innerText = t.tabs.guitars;
+            document.getElementById('tab-amps').innerText = t.tabs.amps;
+            document.getElementById('tab-pedals').innerText = t.tabs.pedals;
+
+            document.getElementById('lbl-time-msg').innerHTML = t.timeMsg;
+            document.getElementById('lbl-guarantee').innerHTML = t.guarantee;
+            document.getElementById('lbl-card-name').innerText = t.cardName;
+            document.getElementById('lbl-card-num').innerText = t.cardNum;
+            document.getElementById('lbl-card-exp').innerText = t.cardExp;
+            document.getElementById('lbl-luthier-title').innerText = t.luthierTitle;
+            document.getElementById('lbl-luthier-desc').innerHTML = t.luthierDesc;
+            document.getElementById('btn-cancel').innerText = t.btnCancel;
+            document.getElementById('btn-confirm').innerText = t.btnConfirm;
+
+            renderProducts('all');
             renderBotState();
         }
 
+        // RENDERIZADO DE PRODUCTOS
+        function renderProducts(filterCategory) {
+            const container = document.getElementById('products-container');
+            container.innerHTML = '';
+            const t = translations[currentLang];
+
+            const filtered = filterCategory === 'all' ? productsDB : productsDB.filter(p => p.cat === filterCategory);
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'prod-card';
+                card.onclick = () => openImportModal(p.id);
+
+                card.innerHTML = `
+                    <div class="prod-img-container">
+                        <span class="badge-import">✈️ Importación (10-14 Días)</span>
+                        ${getSVG(p.type)}
+                    </div>
+                    <div class="prod-body">
+                        <div>
+                            <span class="prod-tag">${p.tag}</span>
+                            <h3 class="prod-title">${p.title}</h3>
+                            <div class="prod-price">${p.price}</div>
+                        </div>
+                        <button class="btn-view-detail">${t.btnDetail}</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterCat(cat, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderProducts(cat);
+        }
+
+        // CHATBOT INTERACTIVO
         function renderBotState() {
             const msg = document.getElementById('bot-msg');
             const opts = document.getElementById('bot-opts');
@@ -365,82 +471,95 @@
             if (currentStep === 'start') {
                 msg.innerText = t.step1Msg;
                 opts.innerHTML = `
-                    <button class="btn-opt" onclick="stepGenre('rock')">${t.optHardRock}</button>
-                    <button class="btn-opt" onclick="stepGenre('latino')">${t.optLatino}</button>
-                    <button class="btn-opt" onclick="stepGenre('blues')">${t.optBlues}</button>
+                    <button class="btn-opt" onclick="botSelectCat('guitar')">${t.optCatGuitar}</button>
+                    <button class="btn-opt" onclick="botSelectCat('amp')">${t.optCatAmp}</button>
+                    <button class="btn-opt" onclick="botSelectCat('pedal')">${t.optCatPedal}</button>
+                    <button class="btn-opt" onclick="botSelectCat('combo')">${t.optCatCombo}</button>
                 `;
-            } else if (currentStep === 'step2') {
-                if (currentGenre === 'rock') {
-                    msg.innerText = t.step2RockMsg;
-                    opts.innerHTML = `
-                        <button class="btn-opt" onclick="stepResult('lespaul')">${t.optLesPaul}</button>
-                        <button class="btn-opt" onclick="stepResult('marshall')">${t.optMarshall}</button>
-                    `;
-                } else if (currentGenre === 'latino') {
-                    msg.innerText = t.step2LatinoMsg;
-                    opts.innerHTML = `
-                        <button class="btn-opt" onclick="stepResult('strat')">${t.optStrat}</button>
-                        <button class="btn-opt" onclick="stepResult('screamer')">${t.optScreamer}</button>
-                    `;
-                } else if (currentGenre === 'blues') {
-                    msg.innerText = t.step2BluesMsg;
-                    opts.innerHTML = `
-                        <button class="btn-opt" onclick="stepResult('strat')">${t.optStratBlues}</button>
-                        <button class="btn-opt" onclick="stepResult('screamer')">${t.optScreamerBlues}</button>
-                    `;
-                }
+            } else if (currentStep === 'budget') {
+                msg.innerText = t.step2BudgetMsg;
+                opts.innerHTML = `
+                    <button class="btn-opt" onclick="botSelectBudget('low')">${t.optB1}</button>
+                    <button class="btn-opt" onclick="botSelectBudget('mid')">${t.optB2}</button>
+                    <button class="btn-opt" onclick="botSelectBudget('high')">${t.optB3}</button>
+                `;
+            } else if (currentStep === 'style') {
+                msg.innerText = t.step3StyleMsg;
+                opts.innerHTML = `
+                    <button class="btn-opt" onclick="botSelectStyle('rock')">${t.optHardRock}</button>
+                    <button class="btn-opt" onclick="botSelectStyle('indie')">${t.optIndie}</button>
+                    <button class="btn-opt" onclick="botSelectStyle('blues')">${t.optBlues}</button>
+                `;
             }
         }
 
-        function stepGenre(genre) {
-            currentStep = 'step2';
-            currentGenre = genre;
-            renderBotState();
-        }
-
-        function stepResult(itemKey) {
+        function botSelectCat(cat) { selectedCategory = cat; currentStep = 'budget'; renderBotState(); }
+        function botSelectBudget(b) { selectedBudget = b; currentStep = 'style'; renderBotState(); }
+        function botSelectStyle(style) {
             document.getElementById('cat-section').scrollIntoView({ behavior: 'smooth' });
-            if (itemKey === 'lespaul') {
-                openImportModal("Gibson Les Paul Studio 70s", "₡580,000", "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?auto=format&fit=crop&w=600&q=80");
-            } else if (itemKey === 'strat') {
-                openImportModal("Fender Player Stratocaster HSS", "₡420,000", "https://images.unsplash.com/photo-1516924962500-2b4b3b99ea02?auto=format&fit=crop&w=600&q=80");
-            } else if (itemKey === 'marshall') {
-                openImportModal("Marshall DSL40CR Tube Combo", "₡380,000", "https://images.unsplash.com/photo-1558098329-a11cff621064?auto=format&fit=crop&w=600&q=80");
-            } else if (itemKey === 'screamer') {
-                openImportModal("Ibanez TS9 Tube Screamer", "₡65,000", "https://images.unsplash.com/photo-1525201548942-d8732f6617a0?auto=format&fit=crop&w=600&q=80");
+            
+            // Lógica de recomendación de producto
+            if (selectedCategory === 'combo' || (selectedCategory === 'amp' && selectedBudget === 'low')) {
+                openImportModal('amp_mustang');
+            } else if (selectedCategory === 'pedal' && selectedBudget === 'high') {
+                openImportModal('multi_helix');
+            } else if (selectedCategory === 'guitar' && style === 'rock' && selectedBudget === 'high') {
+                openImportModal('lp_gibson');
+            } else if (selectedCategory === 'guitar' && style === 'indie') {
+                openImportModal('strat_fender');
+            } else {
+                openImportModal('prs_custom');
             }
         }
 
         function resetBot() {
             currentStep = 'start';
-            currentGenre = null;
+            selectedCategory = null;
+            selectedBudget = null;
             renderBotState();
         }
 
-        function openImportModal(title, price, img) {
-            document.getElementById('modal-item-title').innerText = title;
-            document.getElementById('modal-item-price').innerText = price;
-            document.getElementById('modal-item-img').src = img;
+        // MODAL Y DETALLES
+        function openImportModal(prodId) {
+            const p = productsDB.find(item => item.id === prodId);
+            if (!p) return;
+
+            document.getElementById('modal-item-title').innerText = p.title;
+            document.getElementById('modal-item-price').innerText = p.price;
+            document.getElementById('modal-item-tag').innerText = p.tag;
+            document.getElementById('modal-item-desc').innerText = p.desc;
+            document.getElementById('modal-svg-container').innerHTML = getSVG(p.type);
+
             document.getElementById('importModal').style.display = 'flex';
         }
 
-        function closeImportModal() {
-            document.getElementById('importModal').style.display = 'none';
-        }
+        function closeImportModal() { document.getElementById('importModal').style.display = 'none'; }
 
         function confirmOrder() {
             const hasLuthier = document.getElementById('chkLuthier').checked;
-            let msg = currentLang === 'en' 
-                ? "Import order pre-authorized successfully!\n\nYour card has NOT been charged yet. Estimated arrival: 10 to 14 business days."
-                : "¡Pedido de importación pre-autorizado con éxito!\n\nTu tarjeta NO ha sido cobrada aún. Tiempo estimado de entrega: 10 a 14 días.";
-            if (hasLuthier) {
-                msg += currentLang === 'en'
-                    ? "\n\n🛠️ Includes professional luthier inspection, setup, and cleaning before final delivery."
-                    : "\n\n🛠️ Incluye inspección, calibración y limpieza profesional en taller de Luthier Afiliado antes de la entrega.";
-            }
+            const t = translations[currentLang];
+            let msg = t.alertOk;
+            if (hasLuthier) { msg += t.alertLuthier; }
             alert(msg);
             closeImportModal();
         }
+
+        // GENERADOR DE ILUSTRACIONES SVG LIMPIAS
+        function getSVG(type) {
+            if (type === 'lp') return `<svg class="gear-svg" viewBox="0 0 100 200"><path d="M50 10 L53 60 L47 60 Z" fill="#888"/><circle cx="50" cy="65" r="8" fill="#ff5722"/><path d="M35 100 C 25 110, 20 130, 30 160 C 35 180, 65 180, 70 160 C 80 130, 75 110, 65 100 Z" fill="#b71c1c" stroke="#d84315" stroke-width="2"/></svg>`;
+            if (type === 'sg') return `<svg class="gear-svg" viewBox="0 0 100 200"><path d="M50 10 L53 60 L47 60 Z" fill="#888"/><circle cx="50" cy="65" r="8" fill="#111"/><path d="M25 85 C 20 70, 30 110, 25 130 C 25 160, 40 175, 50 175 C 60 175, 75 160, 75 130 C 70 110, 80 70, 75 85 Z" fill="#880e4f" stroke="#ad1457" stroke-width="2"/></svg>`;
+            if (type === 'strat') return `<svg class="gear-svg" viewBox="0 0 100 200"><path d="M50 10 L53 60 L47 60 Z" fill="#d7ccc8"/><circle cx="50" cy="65" r="8" fill="#e0e0e0"/><path d="M30 100 C 15 85, 15 110, 25 125 C 20 145, 30 175, 50 175 C 70 175, 80 85, 70 100 Z" fill="#0277bd" stroke="#01579b" stroke-width="2"/></svg>`;
+            if (type === 'tele') return `<svg class="gear-svg" viewBox="0 0 100 200"><path d="M50 10 L53 60 L47 60 Z" fill="#d7ccc8"/><path d="M32 95 C 25 105, 25 130, 30 160 C 35 178, 65 178, 70 160 C 75 130, 75 105, 68 95 Z" fill="#ffb300" stroke="#ffa000" stroke-width="2"/></svg>`;
+            if (type === 'es') return `<svg class="gear-svg" viewBox="0 0 100 200"><path d="M50 10 L53 60 L47 60 Z" fill="#888"/><path d="M28 95 C 18 105, 18 135, 28 165 C 38 185, 62 185, 72 165 C 82 135, 82 105, 72 95 Z" fill="#e65100" stroke="#bf360c" stroke-width="2"/></svg>`;
+            if (type === 'prs') return `<svg class="gear-svg" viewBox="0 0 100 200"><path d="M50 10 L53 60 L47 60 Z" fill="#d7ccc8"/><path d="M28 92 C 22 78, 22 105, 28 125 C 28 155, 45 175, 50 175 C 55 175, 72 155, 72 125 C 78 105, 78 78, 72 92 Z" fill="#f57f17" stroke="#ff8f00" stroke-width="2"/></svg>`;
+            if (type === 'jackson') return `<svg class="gear-svg" viewBox="0 0 100 200"><path d="M50 10 L55 60 L45 60 Z" fill="#111"/><path d="M25 90 C 20 80, 25 120, 25 135 C 25 165, 40 175, 50 175 C 60 175, 75 165, 75 135 C 75 120, 80 80, 75 90 Z" fill="#212121" stroke="#424242" stroke-width="2"/></svg>`;
+            if (type === 'amp') return `<svg class="gear-svg" viewBox="0 0 120 120"><rect x="10" y="20" width="100" height="80" rx="6" fill="#212121" stroke="#ff5722" stroke-width="2"/><rect x="20" y="35" width="80" height="50" fill="#111"/><circle cx="30" cy="27" r="3" fill="#fff"/><circle cx="40" cy="27" r="3" fill="#fff"/></svg>`;
+            return `<svg class="gear-svg" viewBox="0 0 100 100"><rect x="25" y="15" width="50" height="70" rx="5" fill="#388e3c" stroke="#1b5e20" stroke-width="2"/><circle cx="50" cy="40" r="12" fill="#111"/><rect x="35" y="65" width="30" height="12" rx="3" fill="#ccc"/></svg>`;
+        }
+
+        // Inicializar
+        renderProducts('all');
+        renderBotState();
     </script>
 </body>
 </html>
