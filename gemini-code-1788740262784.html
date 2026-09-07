@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToneMatch CR | Marketplace & Tone Finder</title>
+    <style>
+        :root {
+            --primary: #ff5722;
+            --dark: #121212;
+            --card-bg: #1e1e1e;
+            --text: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent: #00e676;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* NAVBAR */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 2rem;
+            background: rgba(18, 18, 18, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #333;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .logo span { color: #fff; }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+
+        nav a:hover { color: var(--primary); }
+
+        /* HERO & CHATBOT */
+        .hero {
+            position: relative;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), 
+                        url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+        }
+
+        .bot-card {
+            background: rgba(30, 30, 30, 0.95);
+            border: 1px solid #333;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 550px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
+        }
+
+        .bot-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .bot-header h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .bot-header p { color: var(--text-muted); font-size: 0.9rem; }
+
+        .chat-bubble {
+            background: #2a2a2a;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.2rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.8rem;
+        }
+
+        .btn-opt {
+            background: #2c2c2c;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .btn-opt:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* SECCIONES COMPARTIDAS */
+        section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
+        .sec-title { font-size: 1.8rem; margin-bottom: 2rem; border-left: 4px solid var(--primary); padding-left: 1rem; }
+
+        /* CATALOGO / RECOMENDACIÓN */
+        .grid-products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .prod-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: 0.3s;
+        }
+
+        .prod-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+
+        .prod-img {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .prod-body { padding: 1.2rem; }
+        .prod-tag { font-size: 0.75rem; background: #333; padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--accent); }
+        .prod-title { font-size: 1.1rem; margin: 0.5rem 0; }
+        .prod-price { font-size: 1.25rem; font-weight: bold; color: var(--primary); }
+
+        /* FICHA DETALLE PRODUCTO */
+        .detail-view {
+            display: none;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid #333;
+            margin-top: 2rem;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) { .detail-grid { grid-template-columns: 1fr; } }
+
+        .price-compare {
+            background: #181818;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border: 1px solid #333;
+        }
+
+        .price-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem; }
+        .badge-good { color: var(--accent); font-weight: bold; }
+
+        /* CHAT CON VENDEDOR & PAGO */
+        .seller-chat-box {
+            background: #181818;
+            border-radius: 8px;
+            padding: 1rem;
+            height: 200px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            border: 1px solid #333;
+        }
+
+        .msg { margin-bottom: 0.8rem; font-size: 0.85rem; }
+        .msg-seller { color: var(--accent); }
+        .msg-user { color: #fff; text-align: right; }
+
+        .btn-action {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        /* LUTHIERS */
+        .luthier-card {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .luthier-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .btn-sec {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-sec:hover { background: var(--primary); color: #fff; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <header>
+        <div class="logo">TONEMATCH <span>CR</span></div>
+        <nav>
+            <a href="#hero">Tone Finder</a>
+            <a href="#cat-section">Catálogo Usado</a>
+            <a href="#luthiers">Luthiers AFILIADOS</a>
+        </nav>
+    </header>
+
+    <!-- HERO + CHATBOT INTERACTIVO -->
+    <section class="hero" id="hero">
+        <div class="bot-card">
+            <div class="bot-header">
+                <h1>¿A quién quieres sonar hoy?</h1>
+                <p>Tu asistente de tono en Costa Rica te recomienda el equipo usado ideal.</p>
+            </div>
+            
+            <div id="bot-flow">
+                <div class="chat-bubble" id="bot-msg">
+                    Paso 1: Selecciona el estilo musical que estás buscando:
+                </div>
+                <div class="options-grid" id="bot-opts">
+                    <button class="btn-opt" onclick="selectGenre('Hard Rock / Heavy')">Hard Rock / Heavy</button>
+                    <button class="btn-opt" onclick="selectGenre('Rock Latino / Español')">Rock en Español</button>
+                    <button class="btn-opt" onclick="selectGenre('Blues & Rock Clásico')">Blues / Classic Rock</button>
+                    <button class="btn-opt" onclick="selectGenre('Indie & Pop Rock')">Indie / Pop Rock</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FICHA DETALLE RECOMENDADA / DETALLE COMPRA -->
+    <section id="detail-section">
+        <div class="detail-view" id="product-detail">
+            <div class="detail-grid">
+                <div>
+                    <img id="dt-img" src="" alt="Guitarra" style="width: 100%; border-radius: 8px;">
+                    <h2 id="dt-title" style="margin-top: 1rem;"></h2>
+                    <p id="dt-desc" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;"></p>
+                    
+                    <!-- ESPECIFICACIONES TÉCNICAS -->
+                    <div style="background: #181818; padding: 1rem; border-radius: 8px; font-size: 0.85rem;">
+                        <p><strong>Pastillas:</strong> <span id="dt-pickups"></span></p>
+                        <p><strong>Cuerpo/Madera:</strong> Caoba / Arce</p>
+                        <p><strong>Ubicación Vendedor:</strong> Heredia, CR</p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="prod-price" id="dt-price" style="font-size: 2rem;"></div>
+                    
+                    <!-- COMPARADOR DE PRECIOS -->
+                    <div class="price-compare">
+                        <div class="price-row">
+                            <span>Promedio usado en CR:</span>
+                            <span id="dt-avg"></span>
+                        </div>
+                        <div class="price-row">
+                            <span>Precio referencia eBay/EEUU:</span>
+                            <span id="dt-ebay"></span>
+                        </div>
+                        <div class="price-row" style="margin-top: 0.5rem; border-top: 1px solid #333; padding-top: 0.5rem;">
+                            <span>Diagnóstico de Precio:</span>
+                            <span class="badge-good">✓ PRECIO JUSTO DE MERCADO</span>
+                        </div>
+                    </div>
+
+                    <!-- CHAT CON VENDEDOR & PUNTO NEUTRO -->
+                    <h4 style="margin-bottom: 0.5rem;">Coordinar con Vendedor (Chat en Vivo)</h4>
+                    <div class="seller-chat-box" id="chat-box">
+                        <div class="msg msg-seller"><strong>Carlos M. (Vendedor):</strong> ¡Buenas! La guitarra está impecable. ¿Te sirve vernos para probarla?</div>
+                    </div>
+
+                    <!-- OPCIONES DE CHAT FICTICIO -->
+                    <div class="options-grid" style="margin-bottom: 1rem;" id="chat-options">
+                        <button class="btn-opt" onclick="sendReply('¿Coordinamos punto medio?')">1. ¿Coordinamos punto medio?</button>
+                        <button class="btn-opt" onclick="sendReply('¿Nos vemos en taller de luthier?')">2. ¿Nos vemos en taller de luthier?</button>
+                    </div>
+
+                    <button class="btn-action" onclick="alert('¡Demo! Esto retendría el dinero en custodia mediante SINPE hasta que confirmes la entrega en mano.')">
+                        RESERVAR Y PAGAR EN CUSTODIA (SINPE)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATÁLOGO GENERAL -->
+    <section id="cat-section">
+        <h2 class="sec-title">Catálogo Destacado de Usados en Costa Rica</h2>
+        <div class="grid-products">
+            
+            <!-- PRODUCTO 1 -->
+            <div class="prod-card">
+                <img src="https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?auto=format&fit=crop&w=600&q=80" class="prod-img" alt="Les Paul">
+                <div class="prod-body">
+                    <span class="prod-tag">Guitarra Eléctrica</span>
+                    <h3 class="prod-title">Epiphone Les Paul Standard '60s</h3>
+                    <div class="prod-price">₡340,000</div>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Estado: 9/10 | San José</p>
+                </div>
+            </div>
+
+            <!-- PRODUCTO 2 -->
+            <div class="prod-card">
+                <img src="https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=600&q=80" class="prod-img" alt="Stratocaster">
+                <div class="prod-body">
+                    <span class="prod-tag">Guitarra Eléctrica</span>
+                    <h3 class="prod-title">Fender Player Stratocaster HSS</h3>
+                    <div class="prod-price">₡420,000</div>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Estado: 9.5/10 | Alajuela</p>
+                </div>
+            </div>
+
+            <!-- PRODUCTO 3 -->
+            <div class="prod-card">
+                <img src="https://images.unsplash.com/photo-1525201548942-d8732f6617a0?auto=format&fit=crop&w=600&q=80" class="prod-img" alt="Pedal Overdrive">
+                <div class="prod-body">
+                    <span class="prod-tag">Pedal de Efectos</span>
+                    <h3 class="prod-title">Ibanez TS9 Tube Screamer Original</h3>
+                    <div class="prod-price">₡65,000</div>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Estado: 8.5/10 | Cartago</p>
+                </div>
+            </div>
+
+            <!-- PRODUCTO 4 -->
+            <div class="prod-card">
+                <img src="https://images.unsplash.com/photo-1558098329-a11cff621064?auto=format&fit=crop&w=600&q=80" class="prod-img" alt="Amplificador">
+                <div class="prod-body">
+                    <span class="prod-tag">Amplificadores</span>
+                    <h3 class="prod-title">Marshall DSL40CR Tube Combo</h3>
+                    <div class="prod-price">₡380,000</div>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Estado: 9/10 | Heredia</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- LUTHIERS AFILIADOS (RED LOCAL) -->
+    <section id="luthiers">
+        <h2 class="sec-title">Luthiers Afiliados (Puntos de Inspección & Mantenimiento)</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">Lleva tu instrumento a calibrar o realiza la entrega de tu compra usada en un taller verificado.</p>
+
+        <div class="luthier-card">
+            <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=200&q=80" class="luthier-avatar" alt="Luthier">
+            <div style="flex-grow: 1;">
+                <h3>Taller Luthier Custom CR</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Especialista en calibración, cambio de trastes y apantallado.</p>
+                <p style="font-size: 0.85rem; color: var(--accent); margin-top: 0.2rem;">📍 San Pedro, San José • ★ 4.9 (54 reseñas)</p>
+            </div>
+            <button class="btn-sec" onclick="alert('Agendarías cita directa en el Calendly del Luthier con descuento de la plataforma.')">Agendar Cita / Punto Entrega</button>
+        </div>
+
+        <div class="luthier-card">
+            <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=200&q=80" class="luthier-avatar" alt="Luthier 2">
+            <div style="flex-grow: 1;">
+                <h3>Guitar Lab Heredia</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Mantenimiento preventivo, octavación y reparaciones electrónicas.</p>
+                <p style="font-size: 0.85rem; color: var(--accent); margin-top: 0.2rem;">📍 Heredia Centro • ★ 5.0 (32 reseñas)</p>
+            </div>
+            <button class="btn-sec" onclick="alert('Agendarías cita directa en el Calendly del Luthier con descuento de la plataforma.')">Agendar Cita / Punto Entrega</button>
+        </div>
+    </section>
+
+    <!-- JAVASCRIPT LÓGICA DEMO -->
+    <script>
+        // DATOS DE SUGERENCIA IA
+        const gearDatabase = {
+            "Slash (Guns N' Roses)": {
+                title: "Gibson Les Paul Studio '70s Tribute",
+                desc: "Recomendada para tono Hard Rock clásico. Mástil de caoba, pastillas Humbuckers de salida media para ese sustain icónico.",
+                price: "₡580,000",
+                avg: "₡570,000 - ₡610,000",
+                ebay: "$950 USD + Importación",
+                pickups: "Mini-Humbuckers / Seymour Duncan Bridge",
+                img: "https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=800&q=80"
+            },
+            "Gustavo Cerati (Soda Stereo)": {
+                title: "PRS SE Custom 24 / Fender Stratocaster HSS",
+                desc: "Perfecta para Rock en Español e Indie. Gran versatilidad entre limpios cristalinos y saturación melódica.",
+                price: "₡390,000",
+                avg: "₡380,000 - ₡420,000",
+                ebay: "$650 USD",
+                pickups: "HSS (Single Coil + Humbucker)",
+                img: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?auto=format&fit=crop&w=800&q=80"
+            },
+            "Angus Young (AC/DC)": {
+                title: "Epiphone SG Standard '61 Vintage",
+                desc: "Tono directo, agudo y crunch puro. Cuerpo liviano de caoba para riffs potentes de corte clásico.",
+                price: "₡295,000",
+                avg: "₡290,000 - ₡320,000",
+                ebay: "$480 USD",
+                pickups: "Dual Alnico Classic PRO Humbuckers",
+                img: "https://images.unsplash.com/photo-1525201548942-d8732f6617a0?auto=format&fit=crop&w=800&q=80"
+            },
+            "Carlos Santana": {
+                title: "PRS SE Santanal / Standard 24",
+                desc: "Sustain infinito para solos melódicos de blues/rock. Mástil suave y tono cálido con mucho cuerpo.",
+                price: "₡360,000",
+                avg: "₡350,000 - ₡380,000",
+                ebay: "$580 USD",
+                pickups: "PRS TCI "S" Humbuckers",
+                img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80"
+            }
+        };
+
+        function selectGenre(genre) {
+            const msg = document.getElementById('bot-msg');
+            const opts = document.getElementById('bot-opts');
+
+            msg.innerText = `Paso 2: Elegiste ${genre}. ¿Cuál de estos artistas se acerca más a tu tono deseado?`;
+            
+            if (genre === 'Hard Rock / Heavy') {
+                opts.innerHTML = `
+                    <button class="btn-opt" onclick="selectArtist('Slash (Guns N\' Roses)')">Slash (Guns N' Roses)</button>
+                    <button class="btn-opt" onclick="selectArtist('Angus Young (AC/DC)')">Angus Young (AC/DC)</button>
+                `;
+            } else {
+                opts.innerHTML = `
+                    <button class="btn-opt" onclick="selectArtist('Gustavo Cerati (Soda Stereo)')">Cerati (Soda Stereo)</button>
+                    <button class="btn-opt" onclick="selectArtist('Carlos Santana')">Carlos Santana</button>
+                `;
+            }
+        }
+
+        function selectArtist(artist) {
+            const item = gearDatabase[artist];
+            
+            document.getElementById('dt-img').src = item.img;
+            document.getElementById('dt-title').innerText = item.title;
+            document.getElementById('dt-desc').innerText = item.desc;
+            document.getElementById('dt-price').innerText = item.price;
+            document.getElementById('dt-avg').innerText = item.avg;
+            document.getElementById('dt-ebay').innerText = item.ebay;
+            document.getElementById('dt-pickups').innerText = item.pickups;
+
+            document.getElementById('product-detail').style.display = 'block';
+            
+            // Scroll suave hacia la recomendación
+            document.getElementById('detail-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function sendReply(text) {
+            const chatBox = document.getElementById('chat-box');
+            chatBox.innerHTML += `<div class="msg msg-user"><strong>Tú:</strong> ${text}</div>`;
+            
+            setTimeout(() => {
+                if (text.includes('luthier')) {
+                    chatBox.innerHTML += `<div class="msg msg-seller"><strong>Carlos M. (Vendedor):</strong> ¡Excelente idea! Me queda genial vernos en Guitar Lab Heredia para que la revisen.</div>`;
+                } else {
+                    chatBox.innerHTML += `<div class="msg msg-seller"><strong>Carlos M. (Vendedor):</strong> Claro, te parece bien en Oxígeno o Mall San Pedro? Manda la reserva por la web.</div>`;
+                }
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 800);
+        }
+    </script>
+</body>
+</html>
