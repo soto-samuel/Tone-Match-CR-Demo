@@ -96,7 +96,6 @@
         }
         .btn-import-order:hover { background: #e64a19; }
 
-        /* MODAL DE IMPORTACIÓN Y TARJETA */
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; padding: 1rem;
@@ -142,7 +141,6 @@
         </nav>
     </header>
 
-    <!-- HERO & CHATBOT DE TONO -->
     <section class="hero" id="hero">
         <div class="bot-card">
             <div class="bot-header">
@@ -164,14 +162,12 @@
         </div>
     </section>
 
-    <!-- CATÁLOGO BAJO PEDIDO DE IMPORTACIÓN -->
     <section id="cat-section">
         <h2 class="sec-title" id="txt-cat-title">Catálogo Curado para Importación Directa</h2>
         <p style="color: var(--text-muted); margin-bottom: 2rem;" id="txt-cat-sub">Todos los productos vienen asegurados desde EE.UU. e incluyen costo de flete, impuestos y nacionalización.</p>
         
         <div class="grid-products">
             
-            <!-- 1. LES PAUL -->
             <div class="prod-card">
                 <div class="prod-img-container">
                     <span class="badge-import">✈️ Importación (10-14 Días)</span>
@@ -188,7 +184,6 @@
                 </div>
             </div>
 
-            <!-- 2. STRATOCASTER -->
             <div class="prod-card">
                 <div class="prod-img-container">
                     <span class="badge-import">✈️ Importación (10-14 Días)</span>
@@ -205,7 +200,6 @@
                 </div>
             </div>
 
-            <!-- 3. MARSHALL AMP -->
             <div class="prod-card">
                 <div class="prod-img-container">
                     <span class="badge-import">✈️ Importación (10-14 Días)</span>
@@ -222,7 +216,6 @@
                 </div>
             </div>
 
-            <!-- 4. TUBE SCREAMER -->
             <div class="prod-card">
                 <div class="prod-img-container">
                     <span class="badge-import">✈️ Importación (7-10 Días)</span>
@@ -242,7 +235,6 @@
         </div>
     </section>
 
-    <!-- MODAL DE CHECKOUT DE IMPORTACIÓN Y RETENCIÓN DE TARJETA -->
     <div class="modal" id="importModal">
         <div class="modal-content">
             <h2 id="modal-item-title" style="color: var(--primary);"></h2>
@@ -280,7 +272,6 @@
                 </div>
             </div>
 
-            <!-- CHECKBOX SERVICIO DE LUTHIER -->
             <div class="luthier-box">
                 <label style="display: flex; gap: 0.8rem; align-items: flex-start; cursor: pointer;">
                     <input type="checkbox" id="chkLuthier" checked style="margin-top: 0.2rem; width: 18px; height: 18px;">
@@ -300,8 +291,11 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT LÓGICA Y TRADUCTOR -->
     <script>
+        let currentLang = 'es';
+        let currentStep = 'start';
+        let currentGenre = null;
+
         const translations = {
             es: {
                 finder: "Tone Finder",
@@ -310,7 +304,20 @@
                 botSub: "Tu asistente de importación analiza el catálogo internacional para recomendarte el equipo exacto.",
                 reset: "🔄 Reiniciar filtro de tono",
                 catTitle: "Catálogo Curado para Importación Directa",
-                catSub: "Todos los productos vienen asegurados desde EE.UU. e incluyen costo de flete, impuestos y nacionalización."
+                catSub: "Todos los productos vienen asegurados desde EE.UU. e incluyen costo de flete, impuestos y nacionalización.",
+                step1Msg: "Paso 1: Selecciona el estilo de música que más te gusta tocar:",
+                optHardRock: "Hard Rock / Metal",
+                optLatino: "Rock en Español / Indie",
+                optBlues: "Blues / Funk / Jazz",
+                step2RockMsg: "Paso 2: Para Rock / Metal, ¿qué tipo de ganancia o respuesta prefieres?",
+                optLesPaul: "Sustain denso y cálido (Slash / Guns N' Roses)",
+                optMarshall: "Crunch británico con punch (AC/DC / Hard Rock)",
+                step2LatinoMsg: "Paso 2: ¿Qué tipo de textura buscas para Rock Latino / Indie?",
+                optStrat: "Limpios cristalinos + solos versátiles (Soda Stereo / Cerati)",
+                optScreamer: "Overdrive analógico para empujar tu ampli (Blues / Rock)",
+                step2BluesMsg: "Paso 2: ¿Cuál es tu prioridad dinámica?",
+                optStratBlues: "Respuesta dinámica al tacto (Stevie Ray Vaughan)",
+                optScreamerBlues: "Saturación de medios clásica (SRV / Clapton)"
             },
             en: {
                 finder: "Tone Finder",
@@ -319,11 +326,25 @@
                 botSub: "Your import assistant analyzes global gear lists to match your exact tone.",
                 reset: "🔄 Reset Tone Filter",
                 catTitle: "Curated Direct Import Catalog",
-                catSub: "All products are fully insured from the US, including freight, taxes, and customs duties."
+                catSub: "All products are fully insured from the US, including freight, taxes, and customs duties.",
+                step1Msg: "Step 1: Select the style of music you love to play:",
+                optHardRock: "Hard Rock / Metal",
+                optLatino: "Latin Rock / Indie",
+                optBlues: "Blues / Funk / Jazz",
+                step2RockMsg: "Step 2: For Rock / Metal, what type of gain response do you prefer?",
+                optLesPaul: "Warm & thick sustain (Slash / Guns N' Roses)",
+                optMarshall: "Punchy British crunch (AC/DC / Hard Rock)",
+                step2LatinoMsg: "Step 2: What sound texture do you need for Latin Rock / Indie?",
+                optStrat: "Pristine cleans + versatile leads (Soda Stereo / Cerati)",
+                optScreamer: "Analog overdrive to push your amp (Blues / Rock)",
+                step2BluesMsg: "Step 2: What is your dynamic priority?",
+                optStratBlues: "Touch-sensitive dynamic response (Stevie Ray Vaughan)",
+                optScreamerBlues: "Classic mid-boost saturation (SRV / Clapton)"
             }
         };
 
         function changeLanguage(lang) {
+            currentLang = lang;
             document.getElementById('nav-finder').innerText = translations[lang].finder;
             document.getElementById('nav-catalog').innerText = translations[lang].catalog;
             document.getElementById('txt-bot-title').innerText = translations[lang].botTitle;
@@ -331,32 +352,50 @@
             document.getElementById('txt-reset').innerText = translations[lang].reset;
             document.getElementById('txt-cat-title').innerText = translations[lang].catTitle;
             document.getElementById('txt-cat-sub').innerText = translations[lang].catSub;
+
+            // Renderiza el chatbot en el idioma activo manteniendo el paso actual
+            renderBotState();
         }
 
-        // LÓGICA DE PREGUNTAS TONE MATCH
-        function stepGenre(genre) {
+        function renderBotState() {
             const msg = document.getElementById('bot-msg');
             const opts = document.getElementById('bot-opts');
+            const t = translations[currentLang];
 
-            if (genre === 'rock') {
-                msg.innerText = "Paso 2: Para Rock / Metal, ¿qué tipo de ganancia o respuesta prefieres?";
+            if (currentStep === 'start') {
+                msg.innerText = t.step1Msg;
                 opts.innerHTML = `
-                    <button class="btn-opt" onclick="stepResult('lespaul')">Sustain denso y cálido (Slash / Guns N' Roses)</button>
-                    <button class="btn-opt" onclick="stepResult('marshall')">Crunch británico con punch (AC/DC / Hard Rock)</button>
+                    <button class="btn-opt" onclick="stepGenre('rock')">${t.optHardRock}</button>
+                    <button class="btn-opt" onclick="stepGenre('latino')">${t.optLatino}</button>
+                    <button class="btn-opt" onclick="stepGenre('blues')">${t.optBlues}</button>
                 `;
-            } else if (genre === 'latino') {
-                msg.innerText = "Paso 2: ¿Qué tipo de textura buscas para Rock Latino / Indie?";
-                opts.innerHTML = `
-                    <button class="btn-opt" onclick="stepResult('strat')">Limpios cristalinos + solos versátiles (Soda Stereo / Cerati)</button>
-                    <button class="btn-opt" onclick="stepResult('screamer')">Overdrive analógico para empujar tu ampli (Blues / Rock)</button>
-                `;
-            } else if (genre === 'blues') {
-                msg.innerText = "Paso 2: ¿Cuál es tu prioridad dinámica?";
-                opts.innerHTML = `
-                    <button class="btn-opt" onclick="stepResult('strat')">Respuesta dinámica al tacto (Stevie Ray Vaughan)</button>
-                    <button class="btn-opt" onclick="stepResult('screamer')">Saturación de medios clásica (SRV / Clapton)</button>
-                `;
+            } else if (currentStep === 'step2') {
+                if (currentGenre === 'rock') {
+                    msg.innerText = t.step2RockMsg;
+                    opts.innerHTML = `
+                        <button class="btn-opt" onclick="stepResult('lespaul')">${t.optLesPaul}</button>
+                        <button class="btn-opt" onclick="stepResult('marshall')">${t.optMarshall}</button>
+                    `;
+                } else if (currentGenre === 'latino') {
+                    msg.innerText = t.step2LatinoMsg;
+                    opts.innerHTML = `
+                        <button class="btn-opt" onclick="stepResult('strat')">${t.optStrat}</button>
+                        <button class="btn-opt" onclick="stepResult('screamer')">${t.optScreamer}</button>
+                    `;
+                } else if (currentGenre === 'blues') {
+                    msg.innerText = t.step2BluesMsg;
+                    opts.innerHTML = `
+                        <button class="btn-opt" onclick="stepResult('strat')">${t.optStratBlues}</button>
+                        <button class="btn-opt" onclick="stepResult('screamer')">${t.optScreamerBlues}</button>
+                    `;
+                }
             }
+        }
+
+        function stepGenre(genre) {
+            currentStep = 'step2';
+            currentGenre = genre;
+            renderBotState();
         }
 
         function stepResult(itemKey) {
@@ -373,15 +412,11 @@
         }
 
         function resetBot() {
-            document.getElementById('bot-msg').innerText = "Paso 1: Selecciona el estilo de música que más te gusta tocar:";
-            document.getElementById('bot-opts').innerHTML = `
-                <button class="btn-opt" onclick="stepGenre('rock')">Hard Rock / Metal</button>
-                <button class="btn-opt" onclick="stepGenre('latino')">Rock en Español / Indie</button>
-                <button class="btn-opt" onclick="stepGenre('blues')">Blues / Funk / Jazz</button>
-            `;
+            currentStep = 'start';
+            currentGenre = null;
+            renderBotState();
         }
 
-        // LÓGICA DE MODAL
         function openImportModal(title, price, img) {
             document.getElementById('modal-item-title').innerText = title;
             document.getElementById('modal-item-price').innerText = price;
@@ -395,9 +430,13 @@
 
         function confirmOrder() {
             const hasLuthier = document.getElementById('chkLuthier').checked;
-            let msg = "¡Pedido de importación pre-autorizado con éxito!\n\nTu tarjeta NO ha sido cobrada aún. Tiempo estimado de entrega: 10 a 14 días.";
+            let msg = currentLang === 'en' 
+                ? "Import order pre-authorized successfully!\n\nYour card has NOT been charged yet. Estimated arrival: 10 to 14 business days."
+                : "¡Pedido de importación pre-autorizado con éxito!\n\nTu tarjeta NO ha sido cobrada aún. Tiempo estimado de entrega: 10 a 14 días.";
             if (hasLuthier) {
-                msg += "\n\n🛠️ Incluye inspección, calibración y limpieza profesional en taller de Luthier Afiliado antes de la entrega.";
+                msg += currentLang === 'en'
+                    ? "\n\n🛠️ Includes professional luthier inspection, setup, and cleaning before final delivery."
+                    : "\n\n🛠️ Incluye inspección, calibración y limpieza profesional en taller de Luthier Afiliado antes de la entrega.";
             }
             alert(msg);
             closeImportModal();
